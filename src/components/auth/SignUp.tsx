@@ -1,5 +1,3 @@
-import { FcGoogle } from "react-icons/fc";
-import { FaFacebook } from "react-icons/fa";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -26,7 +24,7 @@ const formSchema = z.object({
 });
 const SignUp = () => {
   const navigate = useNavigate();
-  const [register, { isLoading }] = useAddNewUserMutation();
+  const [register] = useAddNewUserMutation();
   const [showPassword, setShowPassword] = useState(true);
 
   // 1. Define your form.
@@ -69,7 +67,14 @@ const SignUp = () => {
           </p>
           <p>
             Have an Account? <br />
-            <span className="text-[#4C85BD] cursor-pointer" onClick={()=>{navigate('/login')}}>Sign in</span>
+            <span
+              className="text-[#4C85BD] cursor-pointer"
+              onClick={() => {
+                navigate("/login");
+              }}
+            >
+              Sign in
+            </span>
           </p>
         </div>
         <p className="text-5xl my-10 ">Sign up</p>
