@@ -6,14 +6,14 @@ import { DEALS } from "../../data/deals";
 import useCountdownTimer from "@/hooks/useCountdownTimer";
 import {} from "react-icons";
 import { useState } from "react";
-import menuSVG from "/src/assets/mobile/menu.svg";
-import logoSymbol from "/src/assets/mobile/logo-symbol.svg";
-import brand from "/src/assets/mobile/brand.svg";
-import shoppingCart from "/src/assets/mobile/shopping_cart.svg";
-import person from "/src/assets/mobile/person.svg";
-import search from "/src/assets/mobile/search.svg";
-import avatar from "/src/assets/Avatar.svg";
-import home from "/src/assets/mobile/sidebaricons/home.svg"
+import menuSVG from "../../assets/mobile/menu.svg";
+import logoSymbol from "../../assets/mobile/logo-symbol.svg";
+import brand from "../../assets/mobile/brand.svg";
+import shoppingCart from "../../assets/mobile/shopping_cart.svg";
+import person from "../../assets/mobile/person.svg";
+import search from "../../assets/mobile/search.svg";
+import avatar from "../../assets/Avatar.svg";
+import home from "../../assets/mobile/sidebaricons/home.svg"
 const Home = () => {
   const navigate = useNavigate();
   const { hour, minute, second } = useCountdownTimer();
