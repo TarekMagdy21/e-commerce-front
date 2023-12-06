@@ -8,7 +8,7 @@ import {} from "react-icons";
 import { useState } from "react";
 import menuSVG from "../../assets/mobile/menu.svg";
 import logoSymbol from "../../assets/mobile/logo-symbol.svg";
-import brand from "../../assets/mobile/brand.svg";
+import brand from "../../assets/mobile/Brand.svg";
 import shoppingCart from "../../assets/mobile/shopping_cart.svg";
 import person from "../../assets/mobile/person.svg";
 import search from "../../assets/mobile/search.svg";
