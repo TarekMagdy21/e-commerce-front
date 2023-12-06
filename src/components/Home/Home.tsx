@@ -6,6 +6,7 @@ import { DEALS } from "../../data/deals";
 import useCountdownTimer from "@/hooks/useCountdownTimer";
 import {} from "react-icons";
 import { useState } from "react";
+// Images
 import menuSVG from "../../assets/mobile/menu.svg";
 import logoSymbol from "../../assets/mobile/logo-symbol.svg";
 import brand from "../../assets/mobile/Brand.svg";
@@ -13,8 +14,21 @@ import shoppingCart from "../../assets/mobile/shopping_cart.svg";
 import person from "../../assets/mobile/person.svg";
 import search from "../../assets/mobile/search.svg";
 import avatar from "../../assets/Avatar.svg";
-import home from "../../assets/mobile/sidebaricons/home.svg"
-const Home = () => {
+import home from "../../assets/mobile/sidebaricons/home.svg";
+import list from "../..//assets/mobile/sidebaricons/list.svg";
+import favBorder from "../../assets/mobile/sidebaricons/favorite_border.svg";
+import inventory from "../../assets/mobile/sidebaricons/inventory_2.svg";
+import headset from "../../assets/mobile/sidebaricons/headset_mic.svg";
+import languageIcon from "../../assets/mobile/sidebaricons/language.svg";
+import business from "../../assets/mobile/sidebaricons/business.svg";
+import arrowForward from "../../assets/arrow_forward.svg";
+import facebook from "../../assets/facebook3.svg";
+import instagram from "../../assets/instagram3.svg";
+import linkedin from "../../assets/linkedin3.svg";
+import youtube from "../../assets/youtube3.svg";
+import twitter from "../../assets/twitter3.svg";
+import america from "../../assets/america.svg";
+  const Home = () => {
   const navigate = useNavigate();
   const { hour, minute, second } = useCountdownTimer();
   const [activeMenu, setActiveMenu] = useState(false);
@@ -42,51 +56,29 @@ const Home = () => {
             {/* First Menu */}
             <div className="px-5 pt-5 w-[80%]  ">
               <Link to={"/"} className="flex items-center gap-3 ">
-                <img src={home} alt="" />{" "}
-                Home
+                <img src={home} alt="" /> Home
               </Link>
               <Link to={"/"} className="flex items-center gap-3 pt-4">
-                <img src="/src/assets/mobile/sidebaricons/list.svg" alt="" />{" "}
-                Categories
+                <img src={list} alt="list" /> Categories
               </Link>
               <Link to={"/"} className="flex items-center gap-3 pt-4">
-                <img
-                  src="/src/assets/mobile/sidebaricons/favorite_border.svg"
-                  alt=""
-                />{" "}
-                Favorites
+                <img src={favBorder} alt="favBorder" /> Favorites
               </Link>
               <Link to={"/"} className="flex items-center gap-3 pt-4">
-                <img
-                  src="/src/assets/mobile/sidebaricons/inventory_2.svg"
-                  alt=""
-                />{" "}
-                My orders
+                <img src={inventory} alt="inventory" /> My orders
               </Link>
             </div>
             <hr className="w-[95%] mx-auto mt-5" />
             {/* Second Menu */}
             <div className="px-5 pt-5 w-[80%]  ">
               <Link to={"/"} className="flex items-center gap-3">
-                <img
-                  src="/src/assets/mobile/sidebaricons/language.svg"
-                  alt=""
-                />{" "}
-                English | USD
+                <img src={languageIcon} alt="languageIcon" /> English | USD
               </Link>
               <Link to={"/"} className="flex items-center gap-3 pt-4">
-                <img
-                  src="/src/assets/mobile/sidebaricons/headset_mic.svg"
-                  alt=""
-                />{" "}
-                Contact us
+                <img src={headset} alt="headset" /> Contact us
               </Link>
               <Link to={"/"} className="flex items-center gap-3 pt-4">
-                <img
-                  src="/src/assets/mobile/sidebaricons/business.svg"
-                  alt=""
-                />{" "}
-                About
+                <img src={business} alt="business" /> About
               </Link>
             </div>
             <hr className="w-[95%] mx-auto mt-5" />
@@ -116,16 +108,8 @@ const Home = () => {
               }}
             />
             <p className="flex items-center gap-1">
-              <img
-                src={logoSymbol}
-                alt="logo"
-                className="max-w-full"
-              />
-              <img
-                src={brand}
-                alt="logo"
-                className="max-w-full"
-              />
+              <img src={logoSymbol} alt="logo" className="max-w-full" />
+              <img src={brand} alt="logo" className="max-w-full" />
             </p>
           </div>
 
@@ -267,7 +251,7 @@ const Home = () => {
             ))}
           </div>
           <p className="flex px-5 py-3 items-center gap-1 text-blue-600 text-base font-medium">
-            Source now <img src="/src/assets/arrow_forward.svg" alt="" />
+            Source now <img src={arrowForward} alt="" />
           </p>
         </div>
         {/* gray part */}
@@ -291,12 +275,12 @@ const Home = () => {
         <footer>
           <p className="flex p-5 items-center gap-1">
             <img
-              src="/src/assets/mobile/logo-symbol.svg"
+              src={logoSymbol}
               alt="logo"
               className="max-w-full"
             />
             <img
-              src="/src/assets/mobile/brand.svg"
+              src={brand}
               alt="logo"
               className="max-w-full"
             />
@@ -305,11 +289,11 @@ const Home = () => {
             Best information about the company gies here but now lorem ipsum is
           </p>
           <div className="flex px-5 py-2 gap-2">
-            <img src="/src/assets/facebook3.svg" alt="" />
-            <img src="/src/assets/twitter3.svg" alt="" />
-            <img src="/src/assets/linkedin3.svg" alt="" />
-            <img src="/src/assets/instagram3.svg" alt="" />
-            <img src="/src/assets/youtube3.svg" alt="" />
+            <img src={facebook} alt="" />
+            <img src={twitter} alt="" />
+            <img src={youtube} alt="" />
+            <img src={instagram} alt="" />
+            <img src={linkedin} alt="" />
           </div>
           <div className="flex  p-5 w-[90%] text-gray-400 text-base font-normal   leading-normal">
             <ol className="m-auto">
@@ -362,7 +346,7 @@ const Home = () => {
           <p className="flex bg-gray-100 justify-evenly items-center gap-4 py-5">
             © 2023 Ecommerce.
             <span className="flex gap-3">
-              <img src="/src/assets/america.svg" alt="" />
+              <img src={america} alt="" />
               English
             </span>
           </p>
