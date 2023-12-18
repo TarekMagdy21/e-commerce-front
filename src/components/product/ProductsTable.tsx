@@ -21,7 +21,7 @@ import {
   Breadcrumbs,
   Select,
   FormControl,
-  InputLabel,
+  // InputLabel,
 } from "@mui/material";
 import {useState} from "react";
 //?Mui Icons
@@ -41,7 +41,7 @@ import {PRODUCTS} from "@/data/products";
 import {Link, useNavigate} from "react-router-dom";
 //web
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-import {Transition} from "@headlessui/react";
+// import {Transition} from "@headlessui/react";
 import {FaHeart, FaRegHeart} from "react-icons/fa";
 
 const ProductsTable = () => {
@@ -60,8 +60,7 @@ const ProductsTable = () => {
 
   const [formats, setFormats] = useState(() => []);
   const handleFormat = (event: any, newFormats: any) => {
-    console.log(formats);
-    console.log(newFormats);
+    console.log(newFormats, event);
     if (formats.length < newFormats.length) {
       setNumOfFilters(+numOfFilters + 1);
       setChosenFilters(+chosenFilters.length + 1);
@@ -75,6 +74,7 @@ const ProductsTable = () => {
     setChosenFilters(chosenFilters.filter((i: any) => i !== item));
   };
   const handleChangeSlider = (event: any, newValue: any) => {
+    console.log(event);
     setSliderValue(newValue);
   };
 
@@ -144,8 +144,10 @@ const ProductsTable = () => {
   ];
   const [sort, setSort] = useState<string | null>("Recommended");
   const [selectSort, setSelectSort] = useState<string | null>("bestmatch");
-
+  console.log(setSelectSort);
   const handleSort = (event: React.MouseEvent<HTMLElement>, newSort: string | null) => {
+    console.log(event);
+
     setSort(newSort);
   };
   const [expanded, setExpanded] = useState([true, true, true, true, true]);

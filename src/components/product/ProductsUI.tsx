@@ -18,14 +18,22 @@ import america from "../../assets/america.svg";
 //  for web
 import webLogo from "../../assets/web/web-logo.svg";
 import {RiArrowDownSFill} from "react-icons/ri";
-import {FaUser, FaBars, FaHeart, FaFacebookF, FaInstagram, FaYoutube, FaTwitter} from "react-icons/fa";
+import {
+  FaUser,
+  FaBars,
+  FaHeart,
+  FaFacebookF,
+  FaInstagram,
+  FaYoutube,
+  FaTwitter,
+} from "react-icons/fa";
 import {FaCartShopping} from "react-icons/fa6";
-import {HOMEPRODUCTS} from "@/data/products";
+// import {HOMEPRODUCTS} from "@/data/products";
 import laptop from "../../assets/web/nav-1.jpg";
 import watch from "../../assets/web/nav-2.jpg";
 import printer from "../../assets/web/nav-8.jpg";
 import {useState} from "react";
-import {Breadcrumbs, Button, Stack, Typography} from "@mui/material";
+import {Button} from "@mui/material";
 
 const ProductsUI = () => {
   const navigate = useNavigate();
@@ -97,9 +105,8 @@ const ProductsUI = () => {
             <Button
               key={item?.id} // Added key prop for React list items
               id={item?.id}
-              size="sm"
-              className="bg-gray-200 mr-2 text-[#0D6EFD] overflow-x-scroll"
-               >
+              size="small"
+              className="bg-gray-200 mr-2 text-[#0D6EFD] overflow-x-scroll">
               <Link to={`/products/${item?.url}`}>{item?.name}</Link>
             </Button>
           ))}

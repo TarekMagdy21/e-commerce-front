@@ -1,17 +1,17 @@
 // Images
 import logoSymbol from "../../assets/mobile/logo-symbol.svg";
 import brand from "../../assets/mobile/Brand.svg";
-import search from "../../assets/mobile/search.svg";
+// import search from "../../assets/mobile/search.svg";
 import facebook from "../../assets/facebook3.svg";
 import instagram from "../../assets/instagram3.svg";
 import linkedin from "../../assets/linkedin3.svg";
 import youtube from "../../assets/youtube3.svg";
 import twitter from "../../assets/twitter3.svg";
 import america from "../../assets/america.svg";
-import {Link, Outlet, useNavigate} from "react-router-dom";
-import {Button} from "../ui/button";
-import {Input} from "../ui/input";
-import {CATEGORIES} from "../../data/categories";
+import {Link,  useNavigate} from "react-router-dom";
+// import {Button} from "../ui/button";
+// import {Input} from "../ui/input";
+// import {CATEGORIES} from "../../data/categories";
 // Images
 import shoppingCart from "../../assets/mobile/shopping_cart.svg";
 import person from "../../assets/mobile/person.svg";

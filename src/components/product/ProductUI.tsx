@@ -1,19 +1,19 @@
-import {Link, Outlet, useNavigate} from "react-router-dom";
+import {Link, Outlet} from "react-router-dom";
 // import {Button} from "../ui/button";
 import {Input} from "../ui/input";
-import {CATEGORIES} from "../../data/categories";
+// import {CATEGORIES} from "../../data/categories";
 // Images
-import logoSymbol from "../../assets/mobile/logo-symbol.svg";
-import brand from "../../assets/mobile/Brand.svg";
-import shoppingCart from "../../assets/mobile/shopping_cart.svg";
-import person from "../../assets/mobile/person.svg";
+// import logoSymbol from "../../assets/mobile/logo-symbol.svg";
+// import brand from "../../assets/mobile/Brand.svg";
+// import shoppingCart from "../../assets/mobile/shopping_cart.svg";
+// import person from "../../assets/mobile/person.svg";
 import search from "../../assets/mobile/search.svg";
-import arrowBack from "../../assets/mobile/arrow_back.svg";
-import facebook from "../../assets/facebook3.svg";
-import instagram from "../../assets/instagram3.svg";
-import linkedin from "../../assets/linkedin3.svg";
-import youtube from "../../assets/youtube3.svg";
-import twitter from "../../assets/twitter3.svg";
+// import arrowBack from "../../assets/mobile/arrow_back.svg";
+// import facebook from "../../assets/facebook3.svg";
+// import instagram from "../../assets/instagram3.svg";
+// import linkedin from "../../assets/linkedin3.svg";
+// import youtube from "../../assets/youtube3.svg";
+// import twitter from "../../assets/twitter3.svg";
 import america from "../../assets/america.svg";
 //  for web
 import webLogo from "../../assets/web/web-logo.svg";
@@ -28,12 +28,12 @@ import {
   FaTwitter,
 } from "react-icons/fa";
 import {FaCartShopping} from "react-icons/fa6";
-import {HOMEPRODUCTS} from "@/data/products";
+// import {HOMEPRODUCTS} from "@/data/products";
 import laptop from "../../assets/web/nav-1.jpg";
 import watch from "../../assets/web/nav-2.jpg";
 import printer from "../../assets/web/nav-8.jpg";
 import {useState} from "react";
-import {Breadcrumbs, Button, Stack, Typography} from "@mui/material";
+import {Breadcrumbs, Typography} from "@mui/material";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
 const ProductUI = () => {
@@ -52,7 +52,7 @@ const ProductUI = () => {
       Phones
     </Typography>,
   ];
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [categoriesMenu, setCategoriesMenu] = useState(false);
   const categories = [
     "Laptops",

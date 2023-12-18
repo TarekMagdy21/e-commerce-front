@@ -1,13 +1,13 @@
-import {Link, Outlet, useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 // import {Button} from '../ui/button';
-import {Input} from "../ui/input";
-import {CATEGORIES} from "../../data/categories";
+// import {Input} from "../ui/input";
+// import {CATEGORIES} from "../../data/categories";
 // Images
 import logoSymbol from "../../assets/mobile/logo-symbol.svg";
 import brand from "../../assets/mobile/Brand.svg";
 import shoppingCart from "../../assets/mobile/shopping_cart.svg";
 import person from "../../assets/mobile/person.svg";
-import search from "../../assets/mobile/search.svg";
+// import search from "../../assets/mobile/search.svg";
 import arrowBack from "../../assets/mobile/arrow_back.svg";
 import facebook from "../../assets/facebook3.svg";
 import instagram from "../../assets/instagram3.svg";
@@ -18,7 +18,7 @@ import america from "../../assets/america.svg";
 import {BsArrowRightShort, BsArrowLeftShort} from "react-icons/bs";
 import {useLocation} from "react-router-dom";
 import {useState} from "react";
-import {Box, Tab, Tabs, Rating, Typography, SxProps, Theme} from "@mui/material";
+import {Rating} from "@mui/material";
 import {RxDotFilled} from "react-icons/rx";
 import {TfiCommentAlt} from "react-icons/tfi";
 import {MdOutlineShoppingBasket} from "react-icons/md";
@@ -40,42 +40,13 @@ import {
 } from "@/components/ui/select";
 import {FiMinus, FiPlus} from "react-icons/fi";
 
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number | string;
-  value: number | string;
-  className?: string;
-}
-function CustomTabPanel(props: TabPanelProps) {
-  const {children, value, index, className, ...other} = props;
+ 
 
-  return (
-    <div
-      className={className}
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}>
-      {value === index && (
-        <Box sx={{p: 3}}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-function a11yProps(index: number) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
 const ProductDetails = () => {
   //ابقي غير الكلام ده وهات الداتا عن طريق الاي دي احسن من اللوكيشن لانها بتتمسح لو عمل ريستارت للصفحه
   const location = useLocation();
   const navigate = useNavigate();
-  const [product, setProduct] = useState(location?.state?.product);
+  const product = location?.state?.product;
   const [favorite, setFavorite] = useState(false);
   const initialText = product.description;
   const maxLength = 100;
@@ -87,6 +58,7 @@ const ProductDetails = () => {
   //WEB---------------------------------
   const [currentImage, setCurrentImage] = useState(product.images[4]);
   const [currentSize, setCurrentSize] = useState("");
+  console.log(currentSize)
   const [currentTab, setCurrentTab] = useState(0);
   return (
     <>
@@ -566,21 +538,25 @@ const ProductDetails = () => {
             <div className="border  p-5">
               <p className="font-semibold">Similar items</p>
               {PRODUCTS.map((product) => (
-                <>
+                <div key={product.id}>
                   {product.id <= 4 ? (
-                    <div key={product.id} className=" my-4 flex  gap-3">
+                    <div className=" my-4 flex  gap-3">
                       <div className="border rounded-lg p-2 hover:border-gray-400 cursor-pointer">
-                        <img src={product.thumbnail} alt="" className="aspect-video w-[160px] h-[90px]"  />
+                        <img
+                          src={product.thumbnail}
+                          alt=""
+                          className="aspect-video w-[160px] h-[90px]"
+                        />
                       </div>
                       <div>
-                        <p className="hover:underline cursor-pointer" >{product.title}</p>
+                        <p className="hover:underline cursor-pointer">{product.title}</p>
                         <p className="mt-2 font-semibold">${product.price.toFixed(2)}</p>
                       </div>
                     </div>
                   ) : (
                     ""
                   )}
-                </>
+                </div>
               ))}
             </div>
           </div>
