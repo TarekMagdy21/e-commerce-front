@@ -4,6 +4,13 @@
 @tailwind components;
 @tailwind utilities;
  
+/* In your styles.css or styles.css */
+@layer components {
+  .blue-underline
+   {
+    @apply hover:text-blue-500 hover:underline cursor-pointer text-[#565656]  ;
+  }
+}
 @layer base {
   :root {
     --background: 0 0% 100%;

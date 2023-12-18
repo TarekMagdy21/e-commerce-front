@@ -58,7 +58,7 @@ const Login = () => {
   };
 
   return (
-    <section className="w-screen h-screen bg-chair bg-cover bg-left flex items-center justify-center md:justify-end md:pr-10 lg:pr-[15rem] font-poppins ">
+    <section className="w-screen h-screen bg-chair bg-cover bg-left flex items-center justify-center md:justify-end md:pr-10 lg:pr-[15rem] font-poppins  ">
       <div className="bg-white bg-opacity-75 border rounded-xl mt-5 p-6 pt-10  ">
         <div className="flex gap-4 ">
           <p>

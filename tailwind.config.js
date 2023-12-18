@@ -21,6 +21,8 @@ module.exports = {
         chair: "url('/src/assets/background_chair.jpg')",
         headphones: "url('/src/assets/general/main-tech.png')",
         cargo: "url('/src/assets/general/bg-warehouse.jpg')",
+        girl: "url('/src/assets/web/main-wide.jpg')",
+        techWide: "url('/src/assets/web/tech-wide.jpg')",
       }),
       fontFamily: {
         poppins: "Poppins",
@@ -82,5 +84,9 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate"), require("tailwind-scrollbar")],
+  plugins: [
+		require("tailwindcss-animate"),
+    require("tailwind-scrollbar"),
+    // require("tailwindcss-rtl"),
+  ],
 };

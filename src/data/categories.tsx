@@ -1,10 +1,29 @@
+import computersImg from "../assets/web/nav-1.jpg";
+import miniGadgetImg from "../assets/web/nav-2.jpg";
+import TabletsImg from "../assets/web/nav-3.jpg";
+import HomeTVImg from "../assets/web/nav-4.jpg";
+import CamerasImg from "../assets/web/nav-5.jpg";
+import GamingImg from "../assets/web/nav-6.jpg";
+import HeadphonesImg from "../assets/web/nav-7.jpg";
+import EquipmentsImg from "../assets/web/nav-8.jpg";
 export const CATEGORIES = [
-  { id: "1", name: "Desktop computers", url: "desktop-computers" },
-  { id: "2", name: "Laptops", url: "laptops" },
-  { id: "3", name: "Smartphones", url: "smartphones" },
-  { id: "4", name: "Gaming consoles", url: "gaming-consoles" },
-  { id: "5", name: "Headphones and earphones", url: "headphones" },
-  { id: "6", name: "Smartwatches", url: "smart-watches" },
-  { id: "7", name: "Routers and modems", url: "routers-modems" },
-  { id: "8", name: "Power banks", url: "power-banks" },
+  {id: "0", name: "Desktop computers", url: "desktop-computers"},
+  {id: "1", name: "Laptops", url: "laptops"},
+  {id: "2", name: "Smartphones", url: "smartphones"},
+  {id: "3", name: "Gaming consoles", url: "gaming-consoles"},
+  {id: "4", name: "Headphones and earphones", url: "headphones"},
+  {id: "5", name: "Smartwatches", url: "smart-watches"},
+  {id: "6", name: "Routers and modems", url: "routers-modems"},
+  {id: "7", name: "Power banks", url: "power-banks"},
+];
+
+export const WEBCATEGORIES = [
+  {id: "0", name: " computers", url: "desktop-computers", img: computersImg},
+  {id: "1", name: "Mini gadgets", url: "laptops", img: miniGadgetImg},
+  {id: "2", name: "Tablets", url: "smartphones", img: TabletsImg},
+  {id: "3", name: "Home TV", url: "gaming-consoles", img: HomeTVImg},
+  {id: "4", name: "Cameras", url: "headphones", img: CamerasImg},
+  {id: "5", name: "Gaming", url: "smart-watches", img: GamingImg},
+  {id: "6", name: "Headphones", url: "routers-modems", img: HeadphonesImg},
+  {id: "7", name: "Equipments", url: "power-banks", img: EquipmentsImg},
 ];
