@@ -40,10 +40,8 @@ const SignUp = () => {
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     // Do something with the form data.
     // ✅ This will be type-safe and validated.
-    console.log(data);
     try {
-      const result = await register(data).unwrap();
-      console.log("Result", result);
+      await register(data).unwrap();
       navigate("/login");
       toast.success("Account Successfully Created");
     } catch (err: any) {

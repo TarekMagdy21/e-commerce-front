@@ -1,18 +1,18 @@
-import {useEffect, useState} from "react";
-import CartMobile from "./mobile/CartMobile";
-import CartWeb from "./web/CartWeb";
 import {useNavigate} from "react-router-dom";
-import {deleteCookie, getCookies} from "cookies-next";
+import ProfileMobile from "./mobile/ProfileMobile";
+import ProfileWeb from "./web/ProfileWeb";
+import {useEffect, useState} from "react";
+import {getCookies} from "cookies-next";
+import {deleteCookie} from "cookies-next";
 import {RiArrowDownSFill} from "react-icons/ri";
 import {Link} from "react-router-dom";
 import webLogo from "../../assets/web/web-logo.svg";
-import {FaUser, FaBars, FaHeart} from "react-icons/fa";
+import {FaUser, FaBars, FaHeart, FaRegUserCircle} from "react-icons/fa";
 import {FaCartShopping} from "react-icons/fa6";
 import {FaFacebookF, FaInstagram, FaYoutube, FaTwitter} from "react-icons/fa";
 import america from "../../assets/america.svg";
-import {FaRegUserCircle} from "react-icons/fa";
-
-const Cart = () => {
+const Profile = () => {
+  const navigate = useNavigate();
   const categories = [
     "Computers",
     "Mini Gadgets",
@@ -24,7 +24,7 @@ const Cart = () => {
     "Equipments",
   ];
   const [categoriesMenu, setCategoriesMenu] = useState(false);
-  const navigate = useNavigate();
+
   useEffect(() => {
     if (!getCookies().token) {
       navigate("/login");
@@ -32,11 +32,9 @@ const Cart = () => {
   }, []);
   return (
     <div>
-      {/* Mobile */}
       <div className="md:hidden">
-        <CartMobile />
+        <ProfileMobile />
       </div>
-      {/* Web */}
       <div className="max-md:hidden">
         {/* Web */}
         <div className="max-md:hidden ">
@@ -102,7 +100,7 @@ const Cart = () => {
                       className="border rounded px-3 py-1 flex items-center gap-2 text-gray-500 hover:text-blue-600 hover:bg-gray-50">
                       <FaCartShopping />
                       My cart
-                    </Link>
+                    </Link>{" "}
                     <Link
                       to="/profile"
                       className="border rounded px-3 py-1 flex items-center gap-2 text-gray-500 hover:text-blue-600 hover:bg-gray-50">
@@ -127,7 +125,7 @@ const Cart = () => {
             </div>
           </nav>
 
-          <CartWeb />
+          <ProfileWeb />
 
           {/* Footer */}
           <footer className="bg-[#e9ecef]">
@@ -204,4 +202,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default Profile;

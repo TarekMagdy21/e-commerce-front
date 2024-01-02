@@ -1,24 +1,18 @@
-import { FcGoogle } from "react-icons/fc";
-import { FaFacebook } from "react-icons/fa";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import {FcGoogle} from "react-icons/fc";
+import {FaFacebook} from "react-icons/fa";
+import {zodResolver} from "@hookform/resolvers/zod";
+import {useForm} from "react-hook-form";
 import * as z from "zod";
 
-import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { useLoginMutation } from "@/store/apis/auth/authApiSlice";
-import { toast } from "react-toastify";
+import {Button} from "@/components/ui/button";
+import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
+import {Input} from "@/components/ui/input";
+import {useState} from "react";
+import {Eye, EyeOff} from "lucide-react";
+import {useNavigate} from "react-router-dom";
+import {useLoginMutation} from "@/store/apis/auth/authApiSlice";
+import {toast} from "react-toastify";
+import {setCookie} from "cookies-next";
 const formSchema = z.object({
   email: z.string().email(),
   password: z.string().min(2).max(50),
@@ -41,7 +35,12 @@ const Login = () => {
     // Do something with the form data.
     // ✅ This will be type-safe and validated.
     try {
-      await loginUser(data).unwrap();
+      await loginUser(data)
+        .unwrap()
+        .then((payload) => {
+          setCookie("token", payload?.accessToken);
+          localStorage.setItem("userId", payload?.userId);
+        });
       navigate("/");
       toast.success("Successfully Signed in");
     } catch (err: any) {
@@ -70,8 +69,7 @@ const Login = () => {
               className="text-[#4C85BD] cursor-pointer "
               onClick={() => {
                 navigate("/register");
-              }}
-            >
+              }}>
               Sign up
             </span>
           </p>
@@ -86,14 +84,11 @@ const Login = () => {
           </div>
         </div>
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-8 mt-4 flex flex-col"
-          >
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 mt-4 flex flex-col">
             <FormField
               control={form.control}
               name="email"
-              render={({ field }) => (
+              render={({field}) => (
                 <FormItem>
                   <FormLabel className="ml-3">E-mail</FormLabel>
                   <FormControl>
@@ -106,7 +101,7 @@ const Login = () => {
             <FormField
               control={form.control}
               name="password"
-              render={({ field }) => (
+              render={({field}) => (
                 <FormItem>
                   <FormLabel htmlFor="password" className="ml-3">
                     {" "}

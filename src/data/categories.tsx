@@ -18,12 +18,12 @@ export const CATEGORIES = [
 ];
 
 export const WEBCATEGORIES = [
-  {id: "0", name: " computers", url: "desktop-computers", img: computersImg},
-  {id: "1", name: "Mini gadgets", url: "laptops", img: miniGadgetImg},
-  {id: "2", name: "Tablets", url: "smartphones", img: TabletsImg},
-  {id: "3", name: "Home TV", url: "gaming-consoles", img: HomeTVImg},
-  {id: "4", name: "Cameras", url: "headphones", img: CamerasImg},
-  {id: "5", name: "Gaming", url: "smart-watches", img: GamingImg},
-  {id: "6", name: "Headphones", url: "routers-modems", img: HeadphonesImg},
-  {id: "7", name: "Equipments", url: "power-banks", img: EquipmentsImg},
+  {id: "0", name: " Computers", img: computersImg},
+  {id: "1", name: "Mini Gadgets", img: miniGadgetImg},
+  {id: "2", name: "Tablets", img: TabletsImg},
+  {id: "3", name: "Home TV", img: HomeTVImg},
+  {id: "4", name: "Cameras", img: CamerasImg},
+  {id: "5", name: "Gaming", img: GamingImg},
+  {id: "6", name: "Headphones", img: HeadphonesImg},
+  {id: "7", name: "Equipments", img: EquipmentsImg},
 ];

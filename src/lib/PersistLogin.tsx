@@ -1,9 +1,9 @@
-import { Outlet, Link } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
-import { useRefreshMutation } from "../store/apis/auth/authApiSlice";
+import {Outlet, Link} from "react-router-dom";
+import {useEffect, useRef, useState} from "react";
+import {useRefreshMutation} from "../store/apis/auth/authApiSlice";
 import usePersist from "../hooks/userPersist";
-import { useSelector } from "react-redux";
-import { selectCurrentToken } from "../store/states/authSlice";
+import {useSelector} from "react-redux";
+import {selectCurrentToken} from "../store/states/authSlice";
 import PulseLoader from "react-spinners/PulseLoader";
 
 const PersistLogin = () => {
@@ -13,8 +13,7 @@ const PersistLogin = () => {
 
   const [trueSuccess, setTrueSuccess] = useState(false);
 
-  const [refresh, { isUninitialized, isLoading, isSuccess, isError, error }] =
-    useRefreshMutation();
+  const [refresh, {isUninitialized, isLoading, isSuccess, isError, error}] = useRefreshMutation();
 
   //@ts-ignore
   useEffect(() => {
@@ -24,10 +23,10 @@ const PersistLogin = () => {
       const verifyRefreshToken = async () => {
         console.log("verifying refresh token");
         try {
-          //const response =
           //@ts-ignore
-          await refresh();
-          //const { accessToken } = response.data
+          const response = await refresh();
+          //@ts-ignore
+          const {accessToken} = response.data;
           setTrueSuccess(true);
         } catch (err) {
           console.error(err);

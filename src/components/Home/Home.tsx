@@ -1,8 +1,7 @@
 import {Link, useNavigate} from "react-router-dom";
 import {Button} from "../ui/button";
 import {Input} from "../ui/input";
-import {CATEGORIES, WEBCATEGORIES} from "../../data/categories";
-import {DEALS} from "../../data/deals";
+import {WEBCATEGORIES} from "../../data/categories";
 import useCountdownTimer from "@/hooks/useCountdownTimer";
 import {useState} from "react";
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
@@ -13,7 +12,7 @@ import logoSymbol from "../../assets/mobile/logo-symbol.svg";
 import brand from "../../assets/mobile/Brand.svg";
 import shoppingCart from "../../assets/mobile/shopping_cart.svg";
 import person from "../../assets/mobile/person.svg";
-import search from "../../assets/mobile/search.svg";
+import searchIcon from "../../assets/mobile/search.svg";
 import home from "../../assets/mobile/sidebaricons/home.svg";
 import list from "../..//assets/mobile/sidebaricons/list.svg";
 import favBorder from "../../assets/mobile/sidebaricons/favorite_border.svg";
@@ -31,40 +30,60 @@ import america from "../../assets/america.svg";
 //  for web
 import webLogo from "../../assets/web/web-logo.svg";
 import {RiArrowDownSFill} from "react-icons/ri";
-import {FaUser, FaBars, FaHeart} from "react-icons/fa";
+import {FaUser, FaBars, FaHeart, FaRegHeart, FaRegUserCircle} from "react-icons/fa";
 import {FaCartShopping} from "react-icons/fa6";
-import {HOMEPRODUCTS} from "@/data/products";
 import laptop from "../../assets/web/nav-1.jpg";
 import watch from "../../assets/web/nav-2.jpg";
 import printer from "../../assets/web/nav-8.jpg";
 
 import {FaFacebookF, FaInstagram, FaYoutube, FaTwitter} from "react-icons/fa";
+import {useGetProductsQuery} from "@/store/apis/productApi/productApi";
+import {ProductProps} from "./../../shared/Product.interface";
+import {deleteCookie, getCookies} from "cookies-next";
 
 const Home = () => {
+  const {data: Products, isLoading} = useGetProductsQuery({page: 1, limit: 9});
+  const [search, setSearch] = useState("");
+  const {data: SearchProducts} = useGetProductsQuery({title: search});
   const navigate = useNavigate();
   const {hour, minute, second} = useCountdownTimer();
   const [activeMenu, setActiveMenu] = useState(false);
   const [categoriesMenu, setCategoriesMenu] = useState(false);
   const categories = [
-    "Laptops",
+    "Computers",
+    "Mini Gadgets",
+    "Tablets",
+    "Home TV",
     "Cameras",
-    "Gadgets",
-    "Accessories",
-    "Smartphones",
-    "Smartwatches",
-    "Headsets",
-    "Gamings",
-    "Apple",
-    "Lacetti",
-    "Toyota",
-    "Hyundai",
-    "Mercedes",
-    "Chevrolet",
-    "Lacetti",
-    "Hyundai",
-    "Office tech",
-    "Home equipments",
+    "Gaming",
+    "Headphones",
+    "Equipments",
   ];
+
+  if (isLoading) {
+    return (
+      <div className="text-center my-10">
+        <div role="status">
+          <svg
+            aria-hidden="true"
+            className="inline w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+            viewBox="0 0 100 101"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+              fill="currentColor"
+            />
+            <path
+              d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+              fill="currentFill"
+            />
+          </svg>
+          <span className="sr-only">Loading...</span>
+        </div>
+      </div>
+    );
+  }
   return (
     <>
       {/* Mobile */}
@@ -83,19 +102,38 @@ const Home = () => {
                 <AvatarImage src="https://github.com/shadcn.png" />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
-              <p className="my-2">
-                <Link to={"/login"}>Sign in</Link> |<Link to={"/register"}> Register</Link>
-              </p>
+              <div className="my-2">
+                {getCookies().token ? (
+                  <div
+                    className="cursor-pointer"
+                    onClick={() => {
+                      location.reload();
+                      deleteCookie("token");
+                      localStorage.removeItem("userId");
+                    }}>
+                    Log out
+                  </div>
+                ) : (
+                  <>
+                    <Link to={"/login"}>Sign in</Link>
+                    <span className="mx-2">|</span>
+                    <Link className=" " to={"/register"}>
+                      {" "}
+                      Sign up
+                    </Link>
+                  </>
+                )}{" "}
+              </div>
             </div>
             {/* First Menu */}
             <div className="px-5 pt-5 w-[80%]  ">
               <Link to={"/"} className="flex items-center gap-3 ">
                 <img src={home} alt="" /> Home
               </Link>
-              <Link to={"/"} className="flex items-center gap-3 pt-4">
-                <img src={list} alt="list" /> Categories
+              <Link to={"/products"} className="flex items-center gap-3 pt-4">
+                <img src={list} alt="list" /> Products
               </Link>
-              <Link to={"/"} className="flex items-center gap-3 pt-4">
+              <Link to={"/wishlist"} className="flex items-center gap-3 pt-4">
                 <img src={favBorder} alt="favBorder" /> Favorites
               </Link>
               <Link to={"/"} className="flex items-center gap-3 pt-4">
@@ -130,7 +168,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-
+        {/* navBar */}
         <nav className="flex justify-between px-5 pt-5 pb-3">
           <div className="flex gap-4">
             <img
@@ -164,15 +202,26 @@ const Home = () => {
                 navigate("/profile");
               }}
             />
+            <FaRegHeart
+              size="27"
+              className="mt-1"
+              onClick={() => {
+                navigate("/wishlist");
+              }}
+            />
           </div>
         </nav>
         {/* Search */}
         <form className="">
           <div className="px-5 relative">
-            <img src={search} alt="search" className="absolute left-7 top-2.5" />
+            <img src={searchIcon} alt="search" className="absolute left-7 top-2.5" />
             <Input
               placeholder="Search"
               name="search"
+              value={search}
+              onChange={(e: any) => {
+                setSearch(e.target.value);
+              }}
               type="search"
               className="bg-gray-50 px-8  text-[1rem]"
             />
@@ -180,14 +229,14 @@ const Home = () => {
         </form>
         {/* Scroll categories */}
         <div className="pl-5 pt-3 overflow-x-auto whitespace-nowrap scrollbar-none">
-          {CATEGORIES.map((item) => (
+          {categories.map((i: any, index: number) => (
             <Button
-              key={item?.id} // Added key prop for React list items
-              id={item?.id}
+              key={index} // Added key prop for React list is
+              id={i}
               size="sm"
               className="bg-gray-200 mr-2 text-[#0D6EFD] overflow-x-scroll"
               asChild>
-              <Link to={`/products/${item?.url}`}>{item?.name}</Link>
+              <Link to={`/products/${i.replace(/\s/g, "")}`}>{i}</Link>
             </Button>
           ))}
         </div>
@@ -228,16 +277,21 @@ const Home = () => {
             </div>
           </div>
           <div className="  flex  overflow-x-auto whitespace-nowrap border-b-[1px] scrollbar-none ">
-            {DEALS.map((item, index) => (
+            {Products?.products.map((item: ProductProps, index: number) => (
               <Link
-                key={item.id}
-                to={`/products/${item.url}`}
-                className={`border-r-[1px]   flex flex-col justify-center items-center gap-2 p-4 ${
+                state={item}
+                key={item._id}
+                to={`/product/${item.category}/${item._id}`}
+                className={`border-r-[1px] ${
+                  item.discountPercentage == 0 ? "hidden" : ""
+                }   flex flex-col justify-center items-center gap-2 p-4 ${
                   index == 0 ? "pl-1" : ""
                 }`}>
-                <img src={item.img} alt={item.name} width={50} />
-                <p className="w-fit">{item.name}</p>
-                <p className="text-red-600 bg-red-100   rounded-full w-fit px-3 py-1 ">-25%</p>
+                <img src={item.images[1]} alt={item.title} className="w-10 h-10" />
+                <p className="w-fit">{item.title}</p>
+                <p className="text-red-600 bg-red-100   rounded-full w-fit px-3 py-1 ">
+                  -{item.discountPercentage}%
+                </p>
               </Link>
             ))}
           </div>
@@ -251,15 +305,16 @@ const Home = () => {
             </div>
           </div>
           <div className="  flex  overflow-x-auto whitespace-nowrap border-b-[1px] scrollbar-none ">
-            {DEALS.map((item, index) => (
+            {Products?.products.map((item: ProductProps, index: number) => (
               <Link
-                key={item.id}
-                to={`/products/${item.url}`}
-                className={`border-r-[1px]   flex flex-col justify-center items-center   p-4 ${
-                  index == 0 ? "pl-1" : ""
-                }`}>
-                <img src={item.img} alt={item.name} width={50} />
-                <p className="w-fit">{item.name}</p>
+                state={item}
+                key={item._id}
+                to={`/product/${item.category}/${item._id}`}
+                className={`border-r-[1px] ${
+                  index < 4 ? "hidden" : ""
+                }    flex flex-col justify-center items-center   p-4 ${index == 0 ? "pl-1" : ""}`}>
+                <img src={item.images[1]} alt={item.title} className="w-10 g-10" />
+                <p className="w-fit">{item.title}</p>
                 <p className=" text-center text-gray-400 text-[13px] font-normal ">From USD 19</p>
               </Link>
             ))}
@@ -357,8 +412,21 @@ const Home = () => {
         <nav className="max-w-2xl mx-auto lg:max-w-4xl xl:max-w-5xl 2xl:max-w-7xl ">
           <div className="flex items-center justify-between gap-1 pt-4 relative">
             <div className="flex items-center">
-              <img src={webLogo} alt="Logo" />
-              <p className="text-[#4A92FD] text-2xl mb-2 ml-1 font-bold">Brand</p>
+              <img
+                src={webLogo}
+                alt="Logo"
+                className="cursor-pointer"
+                onClick={() => {
+                  navigate("/");
+                }}
+              />
+              <p
+                className="text-[#4A92FD] text-2xl mb-2 ml-1 font-bold cursor-pointer"
+                onClick={() => {
+                  navigate("/");
+                }}>
+                Brand
+              </p>
               <button
                 onClick={() => {
                   setCategoriesMenu((cat) => !cat);
@@ -368,30 +436,59 @@ const Home = () => {
               </button>
             </div>
             <div className="flex gap-1 items-center">
-              <button className="border rounded px-3 py-1 flex items-center gap-2 text-gray-500 hover:text-blue-600 hover:bg-gray-50">
-                <FaUser />
-                Sign in
-              </button>
-              <button className="border rounded px-3 py-1 flex items-center gap-2 text-gray-500 hover:text-blue-600 hover:bg-gray-50">
-                <FaHeart />
-                Wishlist
-              </button>
-              <button className="border rounded px-3 py-1 flex items-center gap-2 text-gray-500 hover:text-blue-600 hover:bg-gray-50">
-                <FaCartShopping />
-                My cart
-              </button>
+              <div className="border rounded px-3 py-1 flex items-center gap-2 text-gray-500 hover:text-blue-600 hover:bg-gray-50">
+                {getCookies().token ? (
+                  <>
+                    <div
+                      className="cursor-pointer flex items-center gap-2"
+                      onClick={() => {
+                        location.reload();
+                        deleteCookie("token");
+                        localStorage.removeItem("userId");
+                      }}>
+                      <FaUser />
+                      Log out
+                    </div>
+                  </>
+                ) : (
+                  <Link to={"/login"} className="flex items-center gap-2">
+                    <FaUser />
+                    Sign in
+                  </Link>
+                )}
+              </div>
+              {getCookies().token && (
+                <>
+                  <Link
+                    to="/wishlist"
+                    className="border rounded px-3 py-1 flex items-center gap-2 text-gray-500 hover:text-blue-600 hover:bg-gray-50">
+                    <FaHeart />
+                    Wishlist
+                  </Link>
+                  <Link
+                    to="/cart"
+                    className="border rounded px-3 py-1 flex items-center gap-2 text-gray-500 hover:text-blue-600 hover:bg-gray-50">
+                    <FaCartShopping />
+                    My cart
+                  </Link>
+                  <Link
+                    to="/profile"
+                    className="border rounded px-3 py-1 flex items-center gap-2 text-gray-500 hover:text-blue-600 hover:bg-gray-50">
+                    <FaRegUserCircle />
+                    Profile
+                  </Link>
+                </>
+              )}
             </div>
             {categoriesMenu && (
               <div className="grid grid-cols-2 w-[20rem] border gap-3 absolute top-[3.7rem] left-[9.7rem] z-10 bg-white p-5 rounded ">
                 {categories.map((i, index) => (
-                  <div
+                  <Link
+                    to={`/products/${i.replace(/\s/g, "")}`}
                     key={index}
-                    className="hover:bg-blue-200 rounded p-1 cursor-pointer h-fit"
-                    onClick={() => {
-                      console.log(i);
-                    }}>
+                    className="hover:bg-blue-200 rounded p-1 cursor-pointer h-fit">
                     {i}
-                  </div>
+                  </Link>
                 ))}
               </div>
             )}
@@ -401,16 +498,48 @@ const Home = () => {
         <form className="max-w-[45rem] m-auto mt-4 lg:max-w-[60rem] xl:max-w-[68rem] 2xl:max-w-[82.5rem]">
           <div className="px-5  relative">
             <img
-              src={search}
+              src={searchIcon}
               alt="search"
               className="absolute w-7 ml-2 right-5 border-l-2 h-10 bg-white border rounded-r-sm"
             />
             <Input
               placeholder="Search"
               name="search"
+              value={search}
+              onChange={(e: any) => {
+                setSearch(e.target.value);
+              }}
               type="search"
-              className="bg-gray-50 px-4  text-[1rem]"
+              className="bg-gray-50 px-8  text-[1rem]"
             />
+            <div
+              className={`w-[97.5%] h-fit max-h-36 overflow-y-auto absolute z-10 bg-white  border ${
+                search.length == 0 && "hidden"
+              }`}>
+              <div>
+                {SearchProducts?.products.map((product: ProductProps) => (
+                  <div
+                    onClick={() => {
+                      navigate(`/product/${product.category}/${product._id}`, {state: {product}});
+                    }}
+                    key={product._id}
+                    className="mt-1 hover:bg-gray-100 cursor-pointer">
+                    <div className="flex items-center">
+                      <img
+                        src={product.images[0]}
+                        alt="Laptop"
+                        className="w-16 h-16 mt-3 hover:bg-gray-100 mx-5"
+                      />
+                      <div>
+                        <p className="font-medium text-gray-800">{product.title}</p>
+                        <p className="font-semibold text-gray-500">${product.price}</p>
+                      </div>
+                    </div>
+                    <hr className="  mt-4 " />
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </form>
         <hr className="mt-4" />
@@ -432,12 +561,16 @@ const Home = () => {
                 Trendy Products, Factory Prices, Excellent Service
               </p>
               <div className="mt-2 flex gap-1">
-                <button className="  text-white bg-[#ff8800] hover:bg-[#CF6900] px-5 py-2 rounded-lg text-base transition duration-300 ease-in-out">
+                <Link
+                  to={"/products"}
+                  className="  text-white bg-[#ff8800] hover:bg-[#CF6900] px-5 py-2 rounded-lg text-base transition duration-300 ease-in-out">
                   Purchase now
-                </button>
-                <button className=" bg-white hover:text-blue-500 px-5 py-2 rounded-lg text-base  transition duration-200 ease-in-out">
+                </Link>
+                <Link
+                  to={"/products"}
+                  className=" bg-white hover:text-blue-500 px-5 py-2 rounded-lg text-base  transition duration-200 ease-in-out">
                   Learn more
-                </button>
+                </Link>
               </div>
             </div>
           </div>
@@ -447,7 +580,7 @@ const Home = () => {
           <div className=" grid grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 place-items-center p-6 gap-10  max-w-3xl mx-auto lg:max-w-4xl xl:max-w-5xl 2xl:max-w-7xl">
             {WEBCATEGORIES.map((item) => (
               <Link
-                to="/"
+                to={`/products/${item.name.replace(/\s/g, "")}`}
                 key={item.id}
                 className="flex items-center justify-center flex-col hover:underline hover:opacity-80">
                 <img src={item.img} alt="" className="rounded-full" />
@@ -457,28 +590,64 @@ const Home = () => {
           </div>
         </div>
         {/* Recommended Items */}
-        <div  className="max-w-3xl mx-auto lg:max-w-4xl xl:max-w-5xl 2xl:max-w-7xl px-5 ">
+        <div className="max-w-3xl mx-auto lg:max-w-4xl xl:max-w-5xl 2xl:max-w-7xl px-5 ">
           <p className="text-3xl py-4 font-semibold">Recommended items</p>
-          <div className="grid grid-cols-3 gap-4 lg:grid-cols-4 xl:grid-cols-5 ">
-            {HOMEPRODUCTS.map((item) => (
-              <div key={item.id}>
-                {item.bg ? (
-                  <div className="bg-[#0D6EFD] rounded h-full p-4 text-white  ">
+          <div className="grid grid-cols-3 gap-4 lg:grid-cols-4 xl:grid-cols-5">
+            {Products.products.map((item: ProductProps, index: number) => (
+              // <div key={item._id} className="flex flex-col justify-between">
+              //   {index === 5 ? (
+              //     <div className="bg-[#0D6EFD] rounded h-full p-4 text-white">
+              //       <p className="text-2xl font-semibold">Huge White Sale savings</p>
+              //       <p className="font-light opacity-50 mt-4 w-[80%]">
+              //         Get up to 70% off bedding and bath.
+              //       </p>
+              //     </div>
+              //   ) : (
+              //     <div
+              //       onClick={() => {
+              //         navigate(`/product/${item.category}/${item._id}`, {
+              //           state: {product: item},
+              //         });
+              //       }}>
+              //       <img
+              //         src={item.images[0]}
+              //         alt=""
+              //         className="bg-gray-100 p-4   cursor-pointer w-48 h-48" // Set a fixed height
+              //       />
+              //       <div className="flex flex-col items-start">
+              //         <p className="font-semibold my-2">${item.price}</p>
+              //         <p className="hover:text-[#0D6EFD] cursor-pointer whitespace-nowrap">
+              //           {item.title}
+              //         </p>
+              //       </div>
+              //     </div>
+              //   )}
+              // </div>
+              <div
+                key={item._id}
+                className={`flex flex-col rounded overflow-hidden shadow-lg hover:shadow-xl hover:scale-110 transition duration-500`}>
+                {index === 5 ? (
+                  <div className="bg-[#0D6EFD] rounded h-full p-4 text-white">
                     <p className="text-2xl font-semibold">Huge White Sale savings</p>
-                    <p className="font-light  opacity-50 mt-4 w-[80%]">
+                    <p className="font-light opacity-50 mt-4 w-[80%]">
                       Get up to 70% off bedding and bath.
                     </p>
                   </div>
                 ) : (
-                  <>
-                    <img
-                      src={item.image}
-                      alt=""
-                      className="bg-gray-100 p-4 rounded cursor-pointer "
-                    />
-                    <p className="font-semibold my-2 ">${item.price}</p>
-                    <p className="hover:text-[#0D6EFD] cursor-pointer">{item.title}</p>
-                  </>
+                  <Link to={`/product/${item.category}/${item._id}`} state={item}>
+                    <div className="flex flex-column">
+                      <img
+                        className="w-full h-48 object-fill  "
+                        src={item.images[1]}
+                        loading="lazy"
+                        alt={""}
+                      />
+                    </div>
+                    <div className="flex flex-col p-6">
+                      <div className="hover:text-[#0D6EFD] cursor-pointer  ">{item.title}</div>
+                      <div className="font-semibold mt-2">${item.price}</div>
+                    </div>
+                  </Link>
                 )}
               </div>
             ))}
@@ -506,15 +675,40 @@ const Home = () => {
         <div className="max-w-3xl mx-auto lg:max-w-4xl xl:max-w-5xl 2xl:max-w-7xl px-5 mb-10 ">
           <p className="text-3xl py-4 font-semibold">Continue browsing</p>
           <div className="grid grid-cols-3 gap-4 lg:grid-cols-4 xl:grid-cols-5 ">
-            {HOMEPRODUCTS.map((item) => (
-              <div key={item.id} className={`${item.id > 5 && "hidden"}`}>
-                <img src={item.image} alt="" className="bg-gray-100 p-4 rounded cursor-pointer " />
-                <p className="font-semibold my-2 ">${item.price}</p>
-                <p className="hover:text-[#0D6EFD] cursor-pointer">{item.title}</p>
-              </div>
+            {Products.products.map((item: ProductProps, index: number) => (
+              <Link
+                key={item._id}
+                to={`/product/${item.category}/${item._id}`}
+                state={item}
+                className={`flex flex-col rounded overflow-hidden shadow-lg hover:shadow-xl hover:scale-110 transition duration-500 ${
+                  index > 4 ? "hidden" : ""
+                }`}>
+                <div className="flex flex-column">
+                  <img
+                    className="w-full h-48 object-fill  "
+                    src={item.images[0]}
+                    loading="lazy"
+                    alt={""}
+                  />
+                </div>
+                <div className="flex flex-col p-6">
+                  <div className="hover:text-[#0D6EFD] cursor-pointer  ">{item.title}</div>
+                  <div className="font-semibold mt-2">${item.price}</div>
+                </div>
+              </Link>
             ))}
           </div>
         </div>
+        {/* 
+        <div className="rounded overflow-hidden shadow-lg">
+          <div className="flex flex-column">
+            <img className="w-full h-48 object-cover" src={img} loading="lazy" alt={""} />
+            <div className="flex-1 p-6">
+              <div className="">{name}</div>
+            </div>
+          </div>
+        </div> 
+        */}
         {/* Popular categories */}
         <div className="bg-gray-100">
           <div className="max-w-3xl mx-auto lg:max-w-4xl xl:max-w-5xl 2xl:max-w-7xl  p-5   ">

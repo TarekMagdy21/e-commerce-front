@@ -1,8 +1,9 @@
 import {Link, Outlet, useNavigate} from "react-router-dom";
-import {Input} from "../ui/input";
-import searchIcon from "../../assets/mobile/search.svg";
-import america from "../../assets/america.svg";
-import webLogo from "../../assets/web/web-logo.svg";
+import {Input} from "../../ui/input";
+// Images
+import searchIcon from "../../../assets/mobile/search.svg";
+import america from "../../../assets/america.svg";
+import webLogo from "../../../assets/web/web-logo.svg";
 import {RiArrowDownSFill} from "react-icons/ri";
 import {
   FaUser,
@@ -16,33 +17,17 @@ import {
 } from "react-icons/fa";
 import {FaCartShopping} from "react-icons/fa6";
 // import {HOMEPRODUCTS} from "@/data/products";
-import laptop from "../../assets/web/nav-1.jpg";
-import watch from "../../assets/web/nav-2.jpg";
-import printer from "../../assets/web/nav-8.jpg";
+import laptop from "../../../assets/web/nav-1.jpg";
+import watch from "../../../assets/web/nav-2.jpg";
+import printer from "../../../assets/web/nav-8.jpg";
 import {useState} from "react";
-import {Breadcrumbs, Typography} from "@mui/material";
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import {useGetProductsQuery} from "@/store/apis/productApi/productApi";
 import {ProductProps} from "@/shared/Product.interface";
 import {deleteCookie, getCookies} from "cookies-next";
-const ProductUI = () => {
+
+const ProductsUIWeb = () => {
   const [search, setSearch] = useState("");
   const {data: SearchProducts} = useGetProductsQuery({title: search});
-  const breadcrumbs = [
-    <Link key="1" color="inherit" to="/" className="hover:underline  text-[#ABAEB3]">
-      Home
-    </Link>,
-    <Link
-      key="2"
-      color="inherit"
-      to="/material-ui/getting-started/installation/"
-      className="hover:underline text-[#ABAEB3]">
-      Technology
-    </Link>,
-    <Typography key="3" className=" text-[#ABAEB3]">
-      Phones
-    </Typography>,
-  ];
   const navigate = useNavigate();
   const [categoriesMenu, setCategoriesMenu] = useState(false);
   const categories = [
@@ -55,11 +40,11 @@ const ProductUI = () => {
     "Headphones",
     "Equipments",
   ];
-  // This is only used in the web so yea
   return (
-    <div>
-      <div className=" ">
-        <nav className="max-w-2xl mx-auto lg:max-w-4xl xl:max-w-5xl 2xl:max-w-7xl  max-md:hidden">
+    <>
+      {/* Web */}
+      <div className=" max-md:hidden ">
+        <nav className="max-w-2xl mx-auto lg:max-w-4xl xl:max-w-5xl 2xl:max-w-7xl ">
           <div className="flex items-center justify-between gap-1 pt-4 relative">
             <div className="flex items-center">
               <img
@@ -120,7 +105,7 @@ const ProductUI = () => {
                     className="border rounded px-3 py-1 flex items-center gap-2 text-gray-500 hover:text-blue-600 hover:bg-gray-50">
                     <FaCartShopping />
                     My cart
-                  </Link>{" "}
+                  </Link>
                   <Link
                     to="/profile"
                     className="border rounded px-3 py-1 flex items-center gap-2 text-gray-500 hover:text-blue-600 hover:bg-gray-50">
@@ -133,21 +118,22 @@ const ProductUI = () => {
             {categoriesMenu && (
               <div className="grid grid-cols-2 lg:grid-cols-3 lg:w-[30rem]  w-[20rem] border gap-3 absolute top-[3.7rem] left-[9.7rem] z-10 bg-white p-5 rounded ">
                 {categories.map((i, index) => (
-                  <div
+                  <Link
+                    to={`/products/${i.replace(/\s/g, "")}`}
                     key={index}
                     className="hover:bg-blue-200 rounded p-1 cursor-pointer h-fit"
                     onClick={() => {
-                      console.log(i);
+                      setCategoriesMenu(false);
                     }}>
                     {i}
-                  </div>
+                  </Link>
                 ))}
               </div>
             )}
           </div>
         </nav>
         {/* Search */}
-        <form className=" max-md:hidden max-w-[45rem] m-auto mt-4 lg:max-w-[60rem] xl:max-w-[68rem] 2xl:max-w-[82.5rem]">
+        <form className="max-w-[45rem] m-auto mt-4 lg:max-w-[60rem] xl:max-w-[68rem] 2xl:max-w-[82.5rem]">
           <div className="px-5  relative">
             <img
               src={searchIcon}
@@ -164,59 +150,48 @@ const ProductUI = () => {
               type="search"
               className="bg-gray-50 px-8  text-[1rem]"
             />
-          </div>
-          <div
-            className={`ml-5 max-w-2xl mx-auto lg:max-w-4xl xl:max-w-5xl 2xl:max-w-7xl w-full h-fit max-h-36 overflow-y-auto absolute z-10 bg-white  border ${
-              search.length == 0 && "hidden"
-            }`}>
-            <div>
-              {SearchProducts?.products.map((product: ProductProps) => (
-                <div
-                  onClick={() => {
-                    navigate(`/product/${product.category}/${product._id}`, {state: {product}});
-                  }}
-                  key={product._id}
-                  className="mt-1 hover:bg-gray-100 cursor-pointer">
-                  <div className="flex items-center">
-                    <img
-                      src={product.images[0]}
-                      alt="Laptop"
-                      className="w-16 h-16 mt-3 hover:bg-gray-100 mx-5"
-                    />
-                    <div>
-                      <p className="font-medium text-gray-800">{product.title}</p>
-                      <p className="font-semibold text-gray-500">${product.price}</p>
+            <div
+              className={`w-full h-fit max-h-36 overflow-y-auto absolute z-10 bg-white  border ${
+                search.length == 0 && "hidden"
+              }`}>
+              <div>
+                {SearchProducts?.products.map((product: ProductProps) => (
+                  <div
+                    onClick={() => {
+                      navigate(`/product/${product.category}/${product._id}`, {state: {product}});
+                    }}
+                    key={product._id}
+                    className="mt-1 hover:bg-gray-100 cursor-pointer">
+                    <div className="flex items-center">
+                      <img
+                        src={product.images[0]}
+                        alt="Laptop"
+                        className="w-16 h-16 mt-3 hover:bg-gray-100 mx-5"
+                      />
+                      <div>
+                        <p className="font-medium text-gray-800">{product.title}</p>
+                        <p className="font-semibold text-gray-500">${product.price}</p>
+                      </div>
                     </div>
+                    <hr className="  mt-4 " />
                   </div>
-                  <hr className="  mt-4 " />
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </form>
-        <hr className="mt-4  max-md:hidden" />
+        <hr className="mt-4" />
         {/* MenuItems */}
-        <div className="  max-md:hidden flex gap-4 my-[0.8rem] max-w-2xl mx-auto lg:max-w-4xl xl:max-w-5xl 2xl:max-w-7xl">
+        <div className="flex gap-4 my-[0.8rem] max-w-2xl mx-auto lg:max-w-4xl xl:max-w-5xl 2xl:max-w-7xl">
           <p>menuItem1</p>
           <p>menuItem2</p>
           <p>menuItem3</p>
           <p>menuItem4</p>
         </div>
-        <hr className="mt-4  max-md:hidden" />
-        {/* Main Text with BreadCrumbs */}
-        <div className=" max-md:hidden bg-[#F8F9FA]">
-          <div className="max-w-2xl mx-auto lg:max-w-4xl xl:max-w-5xl 2xl:max-w-7xl  py-5">
-            <Breadcrumbs
-              separator={<NavigateNextIcon fontSize="small" className="text-[#a0a8b1]" />}
-              aria-label="breadcrumb">
-              {breadcrumbs}
-            </Breadcrumbs>
-          </div>
-        </div>
+        <hr className="mt-4" />
         <Outlet />
-
         {/* Popular categories */}
-        <div className="bg-gray-100  max-md:hidden">
+        <div className="bg-gray-100 mt-4">
           <div className="max-w-3xl mx-auto lg:max-w-4xl xl:max-w-5xl 2xl:max-w-7xl  p-5   ">
             <p className="text-3xl py-4 font-semibold">Popular categories</p>
             <div className="flex justify-between bg-white rounded-md p-4">
@@ -277,7 +252,7 @@ const ProductUI = () => {
           </div>
         </div>
         {/* Footer */}
-        <footer className="bg-[#e9ecef]  max-md:hidden">
+        <footer className="bg-[#e9ecef]">
           <div className="max-w-3xl mx-auto lg:max-w-4xl xl:max-w-5xl 2xl:max-w-7xl px-5  pt-10 ">
             <div className="flex flex-col items-start gap-4">
               <div className="flex">
@@ -346,7 +321,8 @@ const ProductUI = () => {
           </div>
         </footer>
       </div>
-    </div>
+    </>
   );
 };
-export default ProductUI;
+
+export default ProductsUIWeb;

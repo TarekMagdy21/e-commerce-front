@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
-import { createSelector, createEntityAdapter } from "@reduxjs/toolkit";
-import { apiSlice } from "../mainApiSlice";
+import {createSelector, createEntityAdapter} from "@reduxjs/toolkit";
+import {apiSlice} from "../mainApiSlice";
 
 const usersAdapter = createEntityAdapter({});
 
@@ -9,6 +9,10 @@ const initialState = usersAdapter.getInitialState();
 
 export const usersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
+    getCurrentUser: builder.query({
+      query: (data) => `users/data/?${new URLSearchParams(data)}`,
+      providesTags: ["Products"],
+    }),
     addNewUser: builder.mutation({
       query: (initialUserData) => ({
         url: "/users",
@@ -17,25 +21,23 @@ export const usersApiSlice = apiSlice.injectEndpoints({
           ...initialUserData,
         },
       }),
-      invalidatesTags: [{ type: "User", id: "LIST" }],
+      invalidatesTags: [{type: "User", id: "LIST"}],
     }),
     updateUser: builder.mutation({
-      query: (initialUserData) => ({
+      query: (body) => ({
         url: "/users",
         method: "PATCH",
-        body: {
-          ...initialUserData,
-        },
+        body,
       }),
-      invalidatesTags: (result, error, arg) => [{ type: "User", id: arg.id }],
+      invalidatesTags: (result, error, arg) => [{type: "User", id: arg.id}],
     }),
     deleteUser: builder.mutation({
-      query: ({ id }) => ({
+      query: ({id}) => ({
         url: `/users`,
         method: "DELETE",
-        body: { id },
+        body: {id},
       }),
-      invalidatesTags: (result, error, arg) => [{ type: "User", id: arg.id }],
+      invalidatesTags: (result, error, arg) => [{type: "User", id: arg.id}],
     }),
   }),
 });
@@ -43,4 +45,5 @@ export const {
   useAddNewUserMutation,
   useUpdateUserMutation,
   useDeleteUserMutation,
+  useGetCurrentUserQuery,
 } = usersApiSlice;
