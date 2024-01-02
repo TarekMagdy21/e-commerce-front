@@ -24,4 +24,5 @@ export const BASE_AXIOS_HEADERS = () => ({
 export const axiosInstance = axios.create({
   baseURL: NEW_BASE_URL,
   headers: BASE_AXIOS_HEADERS(),
+  withCredentials: true, 
 });
