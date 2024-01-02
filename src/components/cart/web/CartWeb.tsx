@@ -77,13 +77,14 @@ const CartWeb = () => {
       </div>
     );
   }
+
   return (
     <div className="bg-[#F8F9FA] border-y py-4">
       <div className="  mx-auto  max-w-4xl xl:max-w-5xl 2xl:max-w-7xl">
         <div className="lg:flex gap-4 lg:justify-between grid w-full   ">
           {/* Shopping Cart  */}
           <div className="lg:basis-full bg-white rounded-lg border p-5  ">
-            {CartProducts.items.length == 0 ? (
+            {CartProducts == undefined || CartProducts?.items.length == 0 ? (
               <>
                 <p className="font-semibold mb-4 text-2xl">Shopping cart</p>
                 <p> Cart is Empty </p>
@@ -141,14 +142,14 @@ const CartWeb = () => {
                       </div>
                       <div className="flex flex-col">
                         <p className="text-center font-semibold">
-                          ${(item.product.price * item.quantity).toFixed(2)}
+                          ${(item?.product?.price * item?.quantity).toFixed(2)}
                         </p>
                         <div>
                           <p className="text-center font-semibold ">Quantity</p>
                           <div className="  rounded-lg   flex items-center justify-center    mt-1 ">
                             <button
                               onClick={() => {
-                                if (item.quantity !== 1) {
+                                if (item?.quantity !== 1) {
                                   reduceQuantity({
                                     userId,
                                     productId: item.product._id,
@@ -194,7 +195,7 @@ const CartWeb = () => {
               <p>Have coupon?</p>
               <div className="flex w-full lg:max-w-sm items-center space-x-2 relative">
                 <Input
-                  disabled={CartProducts.items.length == 0}
+                  disabled={CartProducts == undefined || CartProducts?.items.length == 0}
                   width={"100%"}
                   type="text"
                   className="relative my-2 bg-[#F9F9F9]  "
@@ -217,24 +218,32 @@ const CartWeb = () => {
             <div className="shadow-xl bg-white rounded-xl border p-5">
               <div className="grid grid-cols-2 whitespace-nowrap   gap-2">
                 <p className="text-[#9DA1A7]">Subtotal:</p>
-                <p className="ml-auto">${CartProducts?.totalPriceBeforeDiscount.toFixed(2)}</p>
+                <p className="ml-auto">
+                  ${CartProducts ? <>{CartProducts?.totalPriceBeforeDiscount.toFixed(2)}</> : 0}
+                </p>
                 <p className="text-[#9DA1A7]">Discount:</p>
                 <p className="ml-auto text-[#FA3434]">
-                  - $
-                  {coupon.clicked
-                    ? CartProducts?.totalPriceBeforeDiscount.toFixed(2) -
-                      CartProducts?.totalPriceAfterDiscount.toFixed(2) +
-                      40
-                    : CartProducts?.totalPriceBeforeDiscount.toFixed(2) -
-                      CartProducts?.totalPriceAfterDiscount.toFixed(2)}
+                  {CartProducts ? (
+                    <>
+                      - $
+                      {coupon.clicked
+                        ? CartProducts?.totalPriceBeforeDiscount.toFixed(2) -
+                          CartProducts?.totalPriceAfterDiscount.toFixed(2) +
+                          40
+                        : CartProducts?.totalPriceBeforeDiscount.toFixed(2) -
+                          CartProducts?.totalPriceAfterDiscount.toFixed(2)}
+                    </>
+                  ) : (
+                    0
+                  )}
                 </p>
                 <p className="text-[#9DA1A7]">Tax:</p>
                 <p className="ml-auto text-[#00B517]">
-                  + ${CartProducts?.items?.length === 0 ? 0 : 14.0}
+                  {CartProducts ? <> + ${CartProducts?.items?.length === 0 ? 0 : 14.0}</> : 0}
                 </p>
                 <p className="text-[#9DA1A7]">Shipping:</p>
                 <p className="ml-auto text-[#00B517]">
-                  + ${CartProducts?.items?.length === 0 ? 0 : 9.5}
+                  {CartProducts ? <> + ${CartProducts?.items?.length === 0 ? 0 : 9.5}</> : 0}
                 </p>
               </div>
               <hr className="my-4" />
@@ -242,16 +251,16 @@ const CartWeb = () => {
                 <p className="font-semibold  text-xl text-[#9DA1A7]">Total:</p>
                 <p className="font-semibold  text-lg">
                   $
-                  {CartProducts?.items?.length === 0
+                  {CartProducts == undefined || CartProducts?.items?.length === 0
                     ? 0
                     : coupon.clicked
-                    ? (CartProducts.totalPriceAfterDiscount + 14.0 + 9.5 - 40).toFixed(2)
-                    : (CartProducts.totalPriceAfterDiscount + 14.0 + 9.5).toFixed(2)}
+                    ? (CartProducts?.totalPriceAfterDiscount + 14.0 + 9.5 - 40).toFixed(2)
+                    : (CartProducts?.totalPriceAfterDiscount + 14.0 + 9.5).toFixed(2)}
                 </p>
               </div>
               <button
                 onClick={makePayment}
-                disabled={CartProducts?.items?.length == 0}
+                disabled={CartProducts==undefined|| CartProducts?.items?.length == 0}
                 className="disabled:bg-gray-400 w-full px-5 py-4 text-white rounded-lg bg-[#00A524] hover:bg-green-700 duration-300 transition ease-in-out">
                 Make Purchase
               </button>

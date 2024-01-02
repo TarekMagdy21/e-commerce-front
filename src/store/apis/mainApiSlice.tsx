@@ -1,8 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { setCredentials } from "../states/authSlice";
-
+import { NEW_BASE_URL } from "@/config/dataService";
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:3500",
+  baseUrl: NEW_BASE_URL,
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     // @ts-ignore

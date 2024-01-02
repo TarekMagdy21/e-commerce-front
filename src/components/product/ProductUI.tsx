@@ -136,9 +136,7 @@ const ProductUI = () => {
                   <div
                     key={index}
                     className="hover:bg-blue-200 rounded p-1 cursor-pointer h-fit"
-                    onClick={() => {
-                      console.log(i);
-                    }}>
+                    >
                     {i}
                   </div>
                 ))}

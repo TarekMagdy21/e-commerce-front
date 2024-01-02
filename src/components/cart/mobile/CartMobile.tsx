@@ -128,7 +128,7 @@ const CartMobile = () => {
           />
         </div>
       </nav>
-      {CartProducts?.items.length == 0 ? (
+      {CartProducts == undefined ||CartProducts?.items.length == 0 ? (
         <h1 className="text-center mt-5">
           Cart is Empty <br />
           <Link to={"/"} className="text-blue-500 hover:underline ">
@@ -224,33 +224,33 @@ const CartMobile = () => {
             <p className="flex mt-2 text-gray-400 text-base">
               Shipping:
               <span className="ml-auto text-[#00B517] text-base font-medium">
-                ${CartProducts.items.length > 0 ? 10.0 : 0}
+                ${CartProducts?.items.length > 0 ? 10.0 : 0}
               </span>
             </p>
             <p className="flex mt-2 text-gray-400 text-base">
               Tax:
               <span className="ml-auto text-[#00B517] text-base font-medium">
                 {" "}
-                ${CartProducts.items.length > 0 ? 7.0 : 0}
+                ${CartProducts?.items.length > 0 ? 7.0 : 0}
               </span>
             </p>
             <p className="flex mt-2 text-zinc-900 text-lg font-semibold ">
               Total:
               <span className="ml-auto ">
                 $
-                {CartProducts.items.length > 0
+                {CartProducts?.items.length > 0
                   ? (CartProducts?.totalPriceAfterDiscount + 10 + 7).toFixed(2)
                   : 0}
               </span>
             </p>
             <div
               className={`text-center ${
-                CartProducts.items.length == 0 ? "bg-gray-400" : "bg-[#00B517]"
+                CartProducts?.items.length == 0 ? "bg-gray-400" : "bg-[#00B517]"
               }  flex justify-center py-2 mt-2 rounded w-full`}>
               <button
                 onClick={makePayment}
                 className="text-white disabled:bg-gray-400"
-                disabled={CartProducts.items.length == 0}>
+                disabled={CartProducts == undefined ||CartProducts?.items.length == 0}>
                 Checkout ({CartProducts?.items.length} items)
               </button>
             </div>
