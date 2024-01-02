@@ -332,7 +332,7 @@ const Home = () => {
             requests to all suppliers
           </p>
           <Button size="sm" className=" text-white mr-2 bg-[#0D6EFD] w-[35%] font-medium  " asChild>
-            <Link to={`/`}>Send inquiry</Link>
+            <Link to={`/cart`}>Send inquiry</Link>
           </Button>
         </div>
         <div className="h-4 bg-gray-100" />

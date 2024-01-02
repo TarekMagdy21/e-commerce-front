@@ -32,6 +32,7 @@ import {
   useToggleFavoriteMutation,
 } from "@/store/apis/productApi/productApi";
 import {ProductProps} from "./../../../shared/Product.interface";
+import {useAddToCartMutation} from "@/store/apis/cartApi/cartApi";
 interface ProductDetailsMobileProps {
   similarProducts: any; // Adjust the type accordingly
   product: any;
@@ -39,6 +40,8 @@ interface ProductDetailsMobileProps {
 const ProductDetailsMobile: React.FC<ProductDetailsMobileProps> = ({similarProducts, product}) => {
   const userId = localStorage.getItem("userId");
   const {data: wishlist} = useGetFavoriteProductsQuery({userId});
+  const [addToCart] = useAddToCartMutation({});
+
   const [addToWishlist] = useToggleFavoriteMutation({}); //ابقي غير الكلام ده وهات الداتا عن طريق الاي دي احسن من اللوكيشن لانها بتتمسح لو عمل ريستارت للصفحه
   const navigate = useNavigate();
   const maxLength = 100;
@@ -108,7 +111,18 @@ const ProductDetailsMobile: React.FC<ProductDetailsMobileProps> = ({similarProdu
             ${product?.price}
             <span className="text-gray-400 text-[0.8rem] font-normal ml-1">(50-100 pcs)</span>
           </p>
-          <div className=" flex items-center px-2">
+          <div
+            className=" flex items-center px-2"
+            onClick={() => {
+              addToCart({
+                userId,
+                items: [{product: product._id, quantity: 1}],
+              })
+                .unwrap()
+                .then(() => {
+                  navigate("/cart");
+                });
+            }}>
             <div className="cursor-pointer w-full h-10 px-4 bg-gradient-to-b from-blue-600 to-blue-600 rounded-md flex-col justify-center items-center gap-2.5 inline-flex">
               <div className="justify-start items-start gap-2.5 inline-flex">
                 <div className=" text-center text-white text-base font-medium ">Send inquiry</div>
