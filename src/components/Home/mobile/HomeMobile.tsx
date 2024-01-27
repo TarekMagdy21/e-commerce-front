@@ -18,7 +18,7 @@ import linkedin from "../../../assets/linkedin3.svg";
 import youtube from "../../../assets/youtube3.svg";
 import twitter from "../../../assets/twitter3.svg";
 import america from "../../../assets/america.svg";
-import { useState } from "react";
+import { FC, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { deleteCookie, getCookies } from "cookies-next";
 import { Link, useNavigate } from "react-router-dom";
@@ -29,7 +29,7 @@ import { Button } from "@/components/ui/button";
 import useCountdownTimer from "@/hooks/useCountdownTimer";
 import { ProductProps } from "@/shared/Product.interface";
 
-const HomeMobile = ({ Products }) => {
+const HomeMobile: FC<{ Products: ProductProps[] }> = ({ Products }) => {
   const { hour, minute, second } = useCountdownTimer();
   const [activeMenu, setActiveMenu] = useState(false);
   const [search, setSearch] = useState("");
@@ -244,7 +244,7 @@ const HomeMobile = ({ Products }) => {
             </div>
           </div>
           <div className="  flex  overflow-x-auto whitespace-nowrap border-b-[1px] scrollbar-none ">
-            {Products?.products.map((item: ProductProps, index: number) => (
+            {Products.map((item: ProductProps, index: number) => (
               <Link
                 state={item}
                 key={item._id}
@@ -279,7 +279,7 @@ const HomeMobile = ({ Products }) => {
             </div>
           </div>
           <div className="  flex  overflow-x-auto whitespace-nowrap border-b-[1px] scrollbar-none ">
-            {Products?.products.map((item: ProductProps, index: number) => (
+            {Products.map((item: ProductProps, index: number) => (
               <Link
                 state={item}
                 key={item._id}
