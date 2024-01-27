@@ -1,6 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
 import webLogo from "../../../assets/web/web-logo.svg";
-import { Trans, useTranslation } from "react-i18next";
 import { FC, useState } from "react";
 import {
   FaBars,
@@ -26,10 +25,8 @@ import watch from "../../../assets/web/nav-2.jpg";
 import printer from "../../../assets/web/nav-8.jpg";
 import america from "../../../assets/america.svg";
 import { MdLanguage } from "react-icons/md";
-import backgroundMan from '../../../assets/general/yellow-man.png'
+import backgroundMan from "../../../assets/general/yellow-man.png";
 const HomeWeb: FC<{ Products: ProductProps[] }> = ({ Products }) => {
-  const { t, i18n } = useTranslation();
-  console.log("I18", i18n?.language);
   const navigate = useNavigate();
   const [categoriesMenu, setCategoriesMenu] = useState(false);
   const [search, setSearch] = useState("");
@@ -113,18 +110,9 @@ const HomeWeb: FC<{ Products: ProductProps[] }> = ({ Products }) => {
                     <FaRegUserCircle />
                     Profile
                   </Link>
-                  <div
-                    onClick={() => {
-                      if (i18n.language === "en") {
-                        i18n.changeLanguage("ar");
-                      } else {
-                        i18n.changeLanguage("en");
-                      }
-                    }}
-                    className="cursor-pointer border rounded px-3 py-1 flex items-center gap-2 text-gray-500 hover:text-blue-600 hover:bg-gray-50"
-                  >
+                  <div className="cursor-pointer border rounded px-3 py-1 flex items-center gap-2 text-gray-500 hover:text-blue-600 hover:bg-gray-50">
                     <MdLanguage />
-                    {i18n.language.toUpperCase()}
+                    Language
                   </div>
                 </>
               )}
@@ -211,7 +199,12 @@ const HomeWeb: FC<{ Products: ProductProps[] }> = ({ Products }) => {
         {/* Main Image With Text In It */}
         <div className=" relative">
           <div className=" bg-[#00A1F1]  relative  bg-cover  bg-center ">
-            <img src={backgroundMan} className="absolute right-28" width={762} alt="" />
+            <img
+              src={backgroundMan}
+              className="absolute right-28"
+              width={762}
+              alt=""
+            />
             <div className="max-w-2xl mx-auto lg:max-w-4xl xl:max-w-5xl 2xl:max-w-7xl flex flex-col h-full py-36 justify-center">
               <p className="text-white text-5xl leading-snug font-medium">
                 Best products &<br /> brands in our store
@@ -458,7 +451,7 @@ const HomeWeb: FC<{ Products: ProductProps[] }> = ({ Products }) => {
                 {" "}
                 <img src={webLogo} alt="Logo" />
                 <p className="text-[#4A92FD] text-2xl mb-2 ml-1 font-bold">
-                  <Trans i18nKey={"nav.brand"}>Brand</Trans>
+                  Brand
                 </p>
               </div>
               <p className="opacity-50">
