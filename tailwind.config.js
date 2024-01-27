@@ -2,7 +2,7 @@
 module.exports = {
   darkMode: ["class"],
   content: [
-    "./pages/**/*.{ts,tsx}",  
+    "./pages/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
     "./app/**/*.{ts,tsx}",
     "./src/**/*.{ts,tsx}",
@@ -17,11 +17,11 @@ module.exports = {
       },
     },
     extend: {
-      backgroundImage: (theme) => ({
+      backgroundImage: () => ({
         chair: "url('/src/assets/background_chair.jpg')",
         headphones: "url('/src/assets/general/main-tech.png')",
         cargo: "url('/src/assets/general/bg-warehouse.jpg')",
-        girl: "url('/src/assets/web/main-wide.jpg')",
+        // girl: "url('/src/assets/web/main-wide.jpg')",
         techWide: "url('/src/assets/web/tech-wide.jpg')",
       }),
       fontFamily: {
@@ -85,7 +85,7 @@ module.exports = {
     },
   },
   plugins: [
-		require("tailwindcss-animate"),
+    require("tailwindcss-animate"),
     require("tailwind-scrollbar"),
     // require("tailwindcss-rtl"),
   ],
