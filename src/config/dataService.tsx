@@ -1,6 +1,6 @@
 import axios from "axios";
-import {getCookies} from "cookies-next";
- // Select one of the following BASE_URLs
+import { getCookies } from "cookies-next";
+// Select one of the following BASE_URLs
 
 // export const BASE_URL = "http://localhost:3110/api/v1";
 // export const BASE_URL = "https://api.edwintheapp.com/api/v1";
@@ -8,9 +8,9 @@ import {getCookies} from "cookies-next";
 //And it has to start with VITE_SOMETHING ANYTHING
 // console.log(import.meta.env.VITE_BASE_URL_DEVELOPMENT) // 123
 
-export const NEW_BASE_URL = import.meta.env.VITE_BASE_URL;
+export const NEW_BASE_URL = import.meta.env.VITE_BASE_URL_DEVELOPMENT;
 
-export const BASE_HEADERS = (headers: any) => {
+export const BASE_HEADERS = (headers: Headers): Headers => {
   headers.set("Accept", "application/json");
   headers.set("Authorization", `Bearer ${getCookies().token}`);
   headers.set("Accept-Language", "en");
@@ -24,5 +24,5 @@ export const BASE_AXIOS_HEADERS = () => ({
 export const axiosInstance = axios.create({
   baseURL: NEW_BASE_URL,
   headers: BASE_AXIOS_HEADERS(),
-  withCredentials: true, 
+  withCredentials: true,
 });

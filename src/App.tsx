@@ -1,8 +1,8 @@
-import {Routes, Route, Navigate} from "react-router-dom";
-import {ToastContainer} from "react-toastify";
-import {Outlet} from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import { Outlet } from "react-router-dom";
 import Home from "./components/Home/Home";
-import {ThemeProvider} from "./components/theme-provider";
+import { ThemeProvider } from "./components/theme-provider";
 import Login from "./components/auth/Login";
 import SignUp from "./components/auth/SignUp";
 import ProductsUI from "./components/product/ProductsUI";

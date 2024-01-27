@@ -27,3 +27,14 @@ export const WEBCATEGORIES = [
   {id: "6", name: "Headphones", img: HeadphonesImg},
   {id: "7", name: "Equipments", img: EquipmentsImg},
 ];
+
+export const categories = [
+  "Computers",
+  "Mini Gadgets",
+  "Tablets",
+  "Home TV",
+  "Cameras",
+  "Gaming",
+  "Headphones",
+  "Equipments",
+];
