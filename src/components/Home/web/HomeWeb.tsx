@@ -53,7 +53,7 @@ const HomeWeb: FC<{ Products: ProductProps[] }> = ({ Products }) => {
                   navigate("/");
                 }}
               >
-                {t("nav.brand")}
+               Brand
               </p>
               <button
                 onClick={() => {
