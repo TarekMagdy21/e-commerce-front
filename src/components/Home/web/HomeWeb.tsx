@@ -367,8 +367,9 @@ const HomeWeb: FC<{ Products: ProductProps[] }> = ({ Products }) => {
                           hover:bg-blue-600 hover:text-white transition duration-300 ease-in-out  
                           `}
                         >
-                          {wishlist?.wishlist.filter((i) => i._id == item._id)
-                            .length > 0 ? (
+                          {wishlist?.wishlist.filter(
+                            (i: any) => i._id == item._id
+                          ).length > 0 ? (
                             <FaHeart />
                           ) : (
                             <FaRegHeart />
@@ -462,8 +463,9 @@ const HomeWeb: FC<{ Products: ProductProps[] }> = ({ Products }) => {
                           hover:bg-blue-600 hover:text-white transition duration-300 ease-in-out  
                           `}
                       >
-                        {wishlist?.wishlist.filter((i) => i._id == item._id)
-                          .length > 0 ? (
+                        {wishlist?.wishlist.filter(
+                          (i: any) => i._id == item._id
+                        ).length > 0 ? (
                           <FaHeart />
                         ) : (
                           <FaRegHeart />

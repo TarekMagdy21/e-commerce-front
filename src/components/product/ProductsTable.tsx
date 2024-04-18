@@ -3,7 +3,7 @@ import Typography from "@mui/material/Typography/Typography";
 import { Link, useLocation } from "react-router-dom";
 //web
 // import {Transition} from "@headlessui/react";
-import ProductsTableMobile from "./mobile/ProductsTableMobile";
+// import ProductsTableMobile from "./mobile/ProductsTableMobile";
 import ProductsTableWeb from "./web/ProductsTableWeb";
 
 const ProductsTable = () => {
