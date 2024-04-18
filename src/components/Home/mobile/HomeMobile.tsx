@@ -1,4 +1,4 @@
-import { ProductProps } from "@/shared/Product.interface";
+import { ProductProps } from "@/types/Product.interface";
 import { FC, useState } from "react";
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 import { Link, useNavigate } from "react-router-dom";
@@ -33,8 +33,7 @@ import { Button } from "@/components/ui/button";
 
 
 const HomeMobile: FC<{ Products: ProductProps[] }> = ({ Products }) => {
-  console.log("PRODUCTS",Products);
-  
+   
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
   const {hour, minute, second} = useCountdownTimer();

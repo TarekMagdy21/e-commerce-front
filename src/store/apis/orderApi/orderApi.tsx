@@ -23,7 +23,7 @@ export const orderApi = createApi({
     }),
     addOrder: mutation({
       query: (body) => ({
-        url: `/`,
+        url: ``,
         method: "POST",
         body,
       }),

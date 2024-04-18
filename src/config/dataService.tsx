@@ -8,7 +8,8 @@ import {getCookies} from "cookies-next";
 //And it has to start with VITE_SOMETHING ANYTHING
 // console.log(import.meta.env.VITE_BASE_URL_DEVELOPMENT) // 123
 
-export const NEW_BASE_URL = import.meta.env.VITE_BASE_URL;
+// export const NEW_BASE_URL = import.meta.env.VITE_BASE_URL;
+export const NEW_BASE_URL = import.meta.env.VITE_BASE_URL_DEVELOPMENT;
 
 export const BASE_HEADERS = (headers: any) => {
   headers.set("Accept", "application/json");

@@ -1,7 +1,7 @@
-import {Link, Outlet, useNavigate} from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 // import {Button} from "../ui/button";
-import {Input} from "../../ui/input";
- // Images
+import { Input } from "../../ui/input";
+// Images
 import logoSymbol from "../../../assets/mobile/logo-symbol.svg";
 import brand from "../../../assets/mobile/Brand.svg";
 import shoppingCart from "../../../assets/mobile/shopping_cart.svg";
@@ -14,11 +14,11 @@ import linkedin from "../../../assets/linkedin3.svg";
 import youtube from "../../../assets/youtube3.svg";
 import twitter from "../../../assets/twitter3.svg";
 import america from "../../../assets/america.svg";
-import {Button} from "@mui/material";
-import {useState} from "react";
-import {useGetProductsQuery} from "@/store/apis/productApi/productApi";
-import {ProductProps} from "@/shared/Product.interface";
-import {FaRegHeart} from "react-icons/fa";
+import { Button } from "@mui/material";
+import { useState } from "react";
+import { useGetProductsQuery } from "@/store/apis/productApi/productApi";
+import { ProductProps } from "@/types/Product.interface";
+import { FaRegHeart } from "react-icons/fa";
 
 const ProductsUIMobile = () => {
   const categories = [
@@ -33,7 +33,10 @@ const ProductsUIMobile = () => {
   ];
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
-  const {data: SearchProducts} = useGetProductsQuery({title: search});
+  const { data: SearchProducts } = useGetProductsQuery(
+    { title: search },
+    { skip: search === "" }
+  );
   return (
     <>
       {/* Mobile */}
@@ -80,7 +83,11 @@ const ProductsUIMobile = () => {
         {/* Search */}
         <form className="">
           <div className="px-5 relative">
-            <img src={searchIcon} alt="search" className="absolute left-7 top-2.5" />
+            <img
+              src={searchIcon}
+              alt="search"
+              className="absolute left-7 top-2.5"
+            />
             <Input
               placeholder="Search"
               name="search"
@@ -94,15 +101,19 @@ const ProductsUIMobile = () => {
             <div
               className={`w-[88%] h-fit max-h-36 overflow-y-auto absolute z-10 bg-white  border ${
                 search.length == 0 && "hidden"
-              }`}>
+              }`}
+            >
               <div>
                 {SearchProducts?.products.map((product: ProductProps) => (
                   <div
                     onClick={() => {
-                      navigate(`/product/${product.category}/${product._id}`, {state: {product}});
+                      navigate(`/product/${product.category}/${product._id}`, {
+                        state: { product },
+                      });
                     }}
                     key={product._id}
-                    className="mt-1 hover:bg-gray-100 cursor-pointer">
+                    className="mt-1 hover:bg-gray-100 cursor-pointer"
+                  >
                     <div className="flex items-center">
                       <img
                         src={product.images[0]}
@@ -110,8 +121,12 @@ const ProductsUIMobile = () => {
                         className="w-16 h-16 mt-3 hover:bg-gray-100 mx-5"
                       />
                       <div>
-                        <p className="font-medium text-gray-800">{product.title}</p>
-                        <p className="font-semibold text-gray-500">${product.price}</p>
+                        <p className="font-medium text-gray-800">
+                          {product.title}
+                        </p>
+                        <p className="font-semibold text-gray-500">
+                          ${product.price}
+                        </p>
                       </div>
                     </div>
                     <hr className="  mt-4 " />
@@ -128,7 +143,8 @@ const ProductsUIMobile = () => {
               key={item} // Added key prop for React list items
               id={item}
               size="small"
-              className="bg-gray-200 mr-2 text-[#0D6EFD] overflow-x-scroll">
+              className="bg-gray-200 mr-2 text-[#0D6EFD] overflow-x-scroll"
+            >
               <Link to={`/products/${item.replace(/\s/g, "")}`}>{item}</Link>
             </Button>
           ))}
@@ -153,7 +169,9 @@ const ProductsUIMobile = () => {
           </div>
           <div className="flex  p-5 w-[90%] text-gray-400 text-base font-normal   leading-normal">
             <ol className="m-auto">
-              <li className="pb-2 text-zinc-900 text-base font-medium   leading-snug">About</li>
+              <li className="pb-2 text-zinc-900 text-base font-medium   leading-snug">
+                About
+              </li>
               <li>About Us</li>
               <li>Find store</li>
               <li>Categories</li>
@@ -180,7 +198,9 @@ const ProductsUIMobile = () => {
               <li>Contact us</li>
             </ol>
             <ol className="m-auto">
-              <li className="pb-2 text-zinc-900 text-base font-medium   leading-snug">For users</li>
+              <li className="pb-2 text-zinc-900 text-base font-medium   leading-snug">
+                For users
+              </li>
               <li>
                 <Link to="/login">Login</Link>
               </li>

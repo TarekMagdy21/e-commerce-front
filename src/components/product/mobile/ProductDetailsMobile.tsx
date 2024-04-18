@@ -31,7 +31,7 @@ import {
   useGetFavoriteProductsQuery,
   useToggleFavoriteMutation,
 } from "@/store/apis/productApi/productApi";
-import {ProductProps} from "./../../../shared/Product.interface";
+import {ProductProps} from "../../../types/Product.interface";
 import {useAddToCartMutation} from "@/store/apis/cartApi/cartApi";
 interface ProductDetailsMobileProps {
   similarProducts: any; // Adjust the type accordingly

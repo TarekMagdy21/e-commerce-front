@@ -1,9 +1,9 @@
-import {Link, useLocation, useNavigate} from "react-router-dom";
-import {  useState} from "react";
-import {Rating} from "@mui/material";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Rating } from "@mui/material";
 
-import {FaHeart, FaRegHeart, FaShoppingBasket} from "react-icons/fa";
-import {FaCheck} from "react-icons/fa6";
+import { FaHeart, FaRegHeart, FaShoppingBasket } from "react-icons/fa";
+import { FaCheck } from "react-icons/fa6";
 
 // import {
 //   Select,
@@ -12,10 +12,10 @@ import {FaCheck} from "react-icons/fa6";
 //   SelectTrigger,
 //   SelectValue,
 // } from "@/components/ui/select";
-import {FiMinus, FiPlus} from "react-icons/fi";
-import {ProductProps} from "./../../../shared/Product.interface";
-import {useAddToCartMutation} from "@/store/apis/cartApi/cartApi";
-import {toast} from "react-toastify";
+import { FiMinus, FiPlus } from "react-icons/fi";
+import { ProductProps } from "../../../types/Product.interface";
+import { useAddToCartMutation } from "@/store/apis/cartApi/cartApi";
+import { toast } from "react-toastify";
 import {
   useGetFavoriteProductsQuery,
   useToggleFavoriteMutation,
@@ -29,11 +29,17 @@ const ProductDetailsWeb: React.FC<ProductDetailsWebProps> = ({
   similarProducts,
   product: productDetail,
 }) => {
-  const {state} = useLocation();
-  let product = productDetail == undefined ? state : productDetail;
-
   const userId = localStorage.getItem("userId");
-  const {data: wishlist} = useGetFavoriteProductsQuery({userId});
+  const { state } = useLocation();
+  const product = state?.item
+    ? productDetail === undefined
+      ? state.item
+      : productDetail
+    : productDetail === undefined
+    ? state
+    : productDetail;
+
+  const { data: wishlist } = useGetFavoriteProductsQuery({ userId });
   const [addToWishlist] = useToggleFavoriteMutation({}); //ابقي غير الكلام ده وهات الداتا عن طريق الاي دي احسن من اللوكيشن لانها بتتمسح لو عمل ريستارت للصفحه
   const [addToCart] = useAddToCartMutation({});
   //WEB---------------------------------
@@ -48,27 +54,34 @@ const ProductDetailsWeb: React.FC<ProductDetailsWebProps> = ({
       {/* Web */}
       <div className="max-md:hidden">
         <div className="max-w-2xl mx-auto lg:max-w-4xl xl:max-w-5xl 2xl:max-w-7xl mb-4">
-          <div className="flex flex-col justify-center my-4 ">
-            <img
-              src={currentImage}
-              alt="12"
-              className="w-full h-full max-w-[800px] max-h-[600px] p-[0.35rem] border rounded-md mx-auto"
-            />{" "}
+          <div className="flex flex-col justify-center my-4   ">
+            <div className="w-full h-[80%] relative">
+              <div className="w-[800px] h-[600px] overflow-hidden border rounded-md mx-auto">
+                <img
+                  src={currentImage}
+                  alt="12"
+                  className="object-contain w-full h-full"
+                />
+              </div>
+            </div>
             <div className="flex gap-4 justify-center items-center my-2">
               {product?.images.map((p: any, index: any) => (
-                <img
-                  key={index}
-                  src={p}
-                  alt={`p-${p}`}
-                  onClick={() => {
-                    setCurrentImage(p);
-                  }}
-                  className={`rounded w-20 h-w-20 border p-1
-                  
-                  hover:opacity-70
-                  hover:border-gray-400
-                  ${currentImage === p ? "border-blue-500" : ""}`}
-                />
+                <div key={index} className="w-20 h-20 relative">
+                  <img
+                    src={p}
+                    alt={`p-${p}`}
+                    onClick={() => {
+                      setCurrentImage(p);
+                    }}
+                    onMouseEnter={() => {
+                      setCurrentImage(p);
+                    }}
+                    className={`rounded w-full h-full absolute inset-0 border p-1
+                    hover:opacity-70
+                    hover:border-gray-400
+                    ${currentImage === p ? "border-blue-500" : ""}`}
+                  />
+                </div>
               ))}
             </div>
             <div>
@@ -77,9 +90,13 @@ const ProductDetailsWeb: React.FC<ProductDetailsWebProps> = ({
                 <Rating value={product?.rating} readOnly />
                 <p className="  bg-[#565656] bg-opacity-60 rounded-full w-[0.25rem] h-[0.25rem]"></p>
                 <FaShoppingBasket className="text-[#9e9e9e]" />
-                <span className="text-[#9e9e9e]">123 Order</span>
+                <span className="text-[#9e9e9e]">
+                  {product?.numberOfOrders} Order
+                </span>
                 <p className="  bg-[#565656] bg-opacity-60 rounded-full w-[0.25rem] h-[0.25rem]"></p>
-                <span className="text-[#00a524]">In stock</span>
+                <span className="text-[#00a524]">
+                  {product?.stock} In stock
+                </span>
               </div>
               <div>
                 <p className="my-3 text-[#212529] font-semibold text-xl">
@@ -95,7 +112,8 @@ const ProductDetailsWeb: React.FC<ProductDetailsWebProps> = ({
                   Color<span className="text-[#565656]">Silver white</span>
                 </p>
                 <p className="text-[#9da1a7] grid grid-cols-3 mt-2">
-                  Material<span className="text-[#565656]">Metallic, waterproof</span>
+                  Material
+                  <span className="text-[#565656]">Metallic, waterproof</span>
                 </p>
                 <p className="text-[#9da1a7] grid grid-cols-3 mt-2">
                   Brand<span className="text-[#565656]">Samsung</span>
@@ -114,7 +132,8 @@ const ProductDetailsWeb: React.FC<ProductDetailsWebProps> = ({
                       setQuantity((prevState) => prevState - 1);
                     }
                   }}
-                  className="hover:bg-gray-50 hover:border-[#565656] p-2 border rounded-l-md cursor-pointer  transition duration-300 ease-in-out">
+                  className="hover:bg-gray-50 hover:border-[#565656] p-2 border rounded-l-md cursor-pointer  transition duration-300 ease-in-out"
+                >
                   <FiMinus />
                 </button>
                 <div className="hover:border-blue-500 p-1 px-4 border bg-gray-100 transition duration-300 ease-in-out">
@@ -124,7 +143,8 @@ const ProductDetailsWeb: React.FC<ProductDetailsWebProps> = ({
                   onClick={() => {
                     setQuantity((prevState) => prevState + 1);
                   }}
-                  className=" cursor-pointer hover:bg-gray-50 hover:border-[#565656] p-2 border  rounded-r-md transition duration-300 ease-in-out">
+                  className=" cursor-pointer hover:bg-gray-50 hover:border-[#565656] p-2 border  rounded-r-md transition duration-300 ease-in-out"
+                >
                   <FiPlus />
                 </button>
               </div>
@@ -136,40 +156,50 @@ const ProductDetailsWeb: React.FC<ProductDetailsWebProps> = ({
               onClick={() => {
                 addToCart({
                   userId,
-                  items: [{product: product._id, quantity: 1}],
+                  items: [{ product: product._id, quantity: 1 }],
                 });
               }}
-              className="bg-[#ff8100] hover:bg-[#d96e00] text-white rounded p-2 px-3 transition duration-300 ease-in-out">
+              className="bg-[#ff8100] hover:bg-[#d96e00] text-white rounded p-2 px-3 transition duration-300 ease-in-out"
+            >
               Buy now
             </Link>
             <button
               onClick={() => {
                 addToCart({
                   userId,
-                  items: [{product: product._id, quantity}],
+                  items: [{ product: product._id, quantity }],
                 })
                   .unwrap()
                   .then(() => {
-                    toast.success(`Product Added to cart with quantity of ${quantity}`);
+                    toast.success(
+                      `Product Added to cart with quantity of ${quantity}`
+                    );
                   });
               }}
-              className="p-2 px-3 bg-[#0d6efd]  hover:bg-[#0b5ed7] text-white rounded flex items-center gap-2">
+              className="p-2 px-3 bg-[#0d6efd]  hover:bg-[#0b5ed7] text-white rounded flex items-center gap-2"
+            >
               {" "}
               <FaShoppingBasket /> Add to cart
             </button>
             <button
               className={`group p-2 px-3 flex items-center gap-2 rounded border hover:bg-gray-50 transition duration-300 ease-in-out   `}
               onClick={() => {
-                addToWishlist({userId: userId, productId: product._id});
-              }}>
-              {wishlist?.wishlist.filter((item: any) => item._id == product?._id).length > 0 ? (
+                addToWishlist({ userId: userId, productId: product._id });
+              }}
+            >
+              {wishlist?.wishlist.filter(
+                (item: any) => item._id == product?._id
+              ).length > 0 ? (
                 <>
                   <FaHeart className={` text-blue-500    `} />
                   Saved
                 </>
               ) : (
                 <>
-                  <FaRegHeart className={`group-hover:text-blue-500 text-gray-400  `} /> Save
+                  <FaRegHeart
+                    className={`group-hover:text-blue-500 text-gray-400  `}
+                  />{" "}
+                  Save
                 </>
               )}
             </button>
@@ -182,8 +212,13 @@ const ProductDetailsWeb: React.FC<ProductDetailsWebProps> = ({
                 }}
                 className={` cursor-pointer
                p-3 mx-2 mt-2 
-              ${currentTab == 0 ? "bg-white rounded-t-lg border-t-2 border-x-2" : " "}
-              `}>
+              ${
+                currentTab == 0
+                  ? "bg-white rounded-t-lg border-t-2 border-x-2"
+                  : " "
+              }
+              `}
+              >
                 Specification
               </p>
               <p
@@ -192,8 +227,13 @@ const ProductDetailsWeb: React.FC<ProductDetailsWebProps> = ({
                 }}
                 className={` cursor-pointer
                p-3 mx-2 mt-2 
-              ${currentTab == 1 ? "bg-white rounded-t-lg border-t-2 border-x-2" : " "}
-              `}>
+              ${
+                currentTab == 1
+                  ? "bg-white rounded-t-lg border-t-2 border-x-2"
+                  : " "
+              }
+              `}
+              >
                 Warranty info
               </p>
               <p
@@ -202,8 +242,13 @@ const ProductDetailsWeb: React.FC<ProductDetailsWebProps> = ({
                 }}
                 className={` cursor-pointer
                p-3 mx-2 mt-2 
-              ${currentTab == 2 ? "bg-white rounded-t-lg border-t-2 border-x-2" : " "}
-              `}>
+              ${
+                currentTab == 2
+                  ? "bg-white rounded-t-lg border-t-2 border-x-2"
+                  : " "
+              }
+              `}
+              >
                 Shipping info
               </p>
               <p
@@ -212,19 +257,26 @@ const ProductDetailsWeb: React.FC<ProductDetailsWebProps> = ({
                 }}
                 className={` cursor-pointer
                p-3 mx-2 mt-2 
-              ${currentTab == 3 ? "bg-white rounded-t-lg border-t-2 border-x-2" : ""}
-              `}>
+              ${
+                currentTab == 3
+                  ? "bg-white rounded-t-lg border-t-2 border-x-2"
+                  : ""
+              }
+              `}
+              >
                 Seller profile
               </p>
             </div>
             <div className="border-x border-b rounded py-4">
               {currentTab == 0 && (
                 <div className="px-5 text-gray-500">
-                  With supporting text below as a natural lead-in to additional content. Lorem ipsum
-                  dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                  labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                  ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                  reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                  With supporting text below as a natural lead-in to additional
+                  content. Lorem ipsum dolor sit amet, consectetur adipisicing
+                  elit, sed do eiusmod tempor incididunt ut labore et dolore
+                  magna aliqua. Ut enim ad minim veniam, quis nostrud
+                  exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                  consequat. Duis aute irure dolor in reprehenderit in voluptate
+                  velit esse cillum dolore eu fugiat nulla pariatur.
                   <div className="grid grid-cols-2 gap-2 mt-3">
                     <p className="flex items-center gap-2">
                       <FaCheck className="text-green-500" />
@@ -261,12 +313,16 @@ const ProductDetailsWeb: React.FC<ProductDetailsWebProps> = ({
                   </div>
                   <hr className="" />
                   <div className="grid grid-cols-2   hover:bg-gray-100 p-2 cursor-default">
-                    <p className="font-semibold text-[#565656]">Processor capacity: </p>
+                    <p className="font-semibold text-[#565656]">
+                      Processor capacity:{" "}
+                    </p>
                     <span>2.3GHz dual-core Intel Core i5</span>
                   </div>
                   <hr className="" />
                   <div className="grid grid-cols-2   hover:bg-gray-100 p-2 cursor-default">
-                    <p className="font-semibold text-[#565656]">Camera quality: </p>
+                    <p className="font-semibold text-[#565656]">
+                      Camera quality:{" "}
+                    </p>
                     <span> 720p FaceTime HD camera</span>
                   </div>
                   <hr className="" />
@@ -284,36 +340,42 @@ const ProductDetailsWeb: React.FC<ProductDetailsWebProps> = ({
               )}
               {currentTab == 1 && (
                 <div className="px-5 text-gray-500">
-                  Tab content or sample information now Lorem ipsum dolor sit amet, consectetur
-                  adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-                  aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                  aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-                  voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                  occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-                  est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                  eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                  veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                  Tab content or sample information now Lorem ipsum dolor sit
+                  amet, consectetur adipisicing elit, sed do eiusmod tempor
+                  incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+                  veniam, quis nostrud exercitation ullamco laboris nisi ut
+                  aliquip ex ea commodo consequat. Duis aute irure dolor in
+                  reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                  nulla pariatur. Excepteur sint occaecat cupidatat non
+                  proident, sunt in culpa qui officia deserunt mollit anim id
+                  est laborum. Lorem ipsum dolor sit amet, consectetur
+                  adipisicing elit, sed do eiusmod tempor incididunt ut labore
+                  et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                  exercitation ullamco laboris nisi ut aliquip ex ea commodo
                 </div>
               )}
               {currentTab == 2 && (
                 <div className="px-5 text-gray-500">
-                  Another tab content or sample information now Dolor sit amet, consectetur
-                  adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-                  aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                  aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-                  voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                  occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-                  est laborum.
+                  Another tab content or sample information now Dolor sit amet,
+                  consectetur adipisicing elit, sed do eiusmod tempor incididunt
+                  ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                  quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+                  ea commodo consequat. Duis aute irure dolor in reprehenderit
+                  in voluptate velit esse cillum dolore eu fugiat nulla
+                  pariatur. Excepteur sint occaecat cupidatat non proident, sunt
+                  in culpa qui officia deserunt mollit anim id est laborum.
                 </div>
               )}
               {currentTab == 3 && (
                 <div className="px-5 text-gray-500">
-                  Some other tab content or sample information now Lorem ipsum dolor sit amet,
-                  consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                  magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                  nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-                  voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                  occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+                  Some other tab content or sample information now Lorem ipsum
+                  dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                  minim veniam, quis nostrud exercitation ullamco laboris nisi
+                  ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+                  reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                  nulla pariatur. Excepteur sint occaecat cupidatat non
+                  proident, sunt in culpa qui officia deserunt mollit anim id
                   est laborum.
                 </div>
               )}
@@ -324,10 +386,11 @@ const ProductDetailsWeb: React.FC<ProductDetailsWebProps> = ({
                 <div
                   onClick={() => {
                     navigate(`/product/${product.category}/${product._id}`, {
-                      state: {product},
+                      state: { product },
                     });
                   }}
-                  key={product._id}>
+                  key={product._id}
+                >
                   <div className=" my-4 flex  gap-3">
                     <div className="border rounded-lg p-2 hover:border-gray-400 cursor-pointer">
                       <img
@@ -337,8 +400,12 @@ const ProductDetailsWeb: React.FC<ProductDetailsWebProps> = ({
                       />
                     </div>
                     <div>
-                      <p className="hover:underline cursor-pointer">{product.title}</p>
-                      <p className="mt-2 font-semibold">${product.price.toFixed(2)}</p>
+                      <p className="hover:underline cursor-pointer">
+                        {product.title}
+                      </p>
+                      <p className="mt-2 font-semibold">
+                        ${product.price.toFixed(2)}
+                      </p>
                     </div>
                   </div>
                 </div>
