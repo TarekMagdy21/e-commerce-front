@@ -1,8 +1,8 @@
-import {Routes, Route, Navigate} from "react-router-dom";
-import {ToastContainer} from "react-toastify";
-import {Outlet} from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import { Outlet } from "react-router-dom";
 import Home from "./components/Home/Home";
-import {ThemeProvider} from "./components/theme-provider";
+import { ThemeProvider } from "./components/theme-provider";
 import Login from "./components/auth/Login";
 import SignUp from "./components/auth/SignUp";
 import ProductsUI from "./components/product/ProductsUI";
@@ -29,8 +29,6 @@ function App() {
           {/* Specify the element for the nested route */}
           <Route index element={<Home />} />
           <Route path="/test" element={<Test />} />
-          <Route path="/cancel" element={<CartResult />} />
-          <Route path="/success" element={<CartResult />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<SignUp />} />
         </Route>
@@ -43,6 +41,8 @@ function App() {
         </Route>
         <Route path="/cart">
           <Route index element={<Cart />} />
+          <Route path="cancel" element={<CartResult />} />
+          <Route path="success" element={<CartResult />} />
         </Route>
         <Route path="/wishlist">
           <Route index element={<WishList />} />

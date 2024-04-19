@@ -61,8 +61,12 @@ const CartResult = () => {
   } else {
     // Default or invalid path
     content = (
-      <div className="p-4 bg-yellow-200 rounded-md">
+      <div className="p-4 text-center bg-yellow-200 rounded-md">
         <p className="text-yellow-800">Invalid page.</p>
+        <Link to="/" className="font-semibold text-blue-500 hover:underline">
+          {" "}
+          back to home
+        </Link>
       </div>
     );
   }
