@@ -20,7 +20,7 @@ const CartResult = () => {
     if (!getCookies().token) {
       navigate("/login");
     }
-    if (pathname.split("/")[2] == "/success" && data?.items.length > 0) {
+    if (pathname.split("/")[2] == "success" && data?.items.length > 0) {
       addOrder({
         userId,
         cartId: data?.id,
