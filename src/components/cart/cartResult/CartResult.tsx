@@ -16,13 +16,11 @@ const CartResult = () => {
   const [addOrder] = useAddOrderMutation();
   const { data } = useGetCartItemsQuery({ userId });
   const { data: userData } = useGetCurrentUserQuery({ userId });
-  console.log("pathname", pathname);
-  console.log("pathname", data?.items.length);
   useEffect(() => {
     if (!getCookies().token) {
       navigate("/login");
     }
-    if (pathname == "/success" && data?.items.length > 0) {
+    if (pathname.split("/")[2] == "/success" && data?.items.length > 0) {
       addOrder({
         userId,
         cartId: data?.id,
@@ -38,7 +36,7 @@ const CartResult = () => {
   }, [data]);
 
   let content;
-  if (pathname === "/success") {
+  if (pathname.split("/")[2] === "success") {
     content = (
       <div className="p-4 text-center bg-green-200 rounded-md">
         <p className="text-green-800">Successfully purchased!</p>
@@ -48,7 +46,7 @@ const CartResult = () => {
         </Link>
       </div>
     );
-  } else if (pathname === "/cancel") {
+  } else if (pathname.split("/")[2] === "cancel") {
     content = (
       <div className="p-4 text-center bg-red-200 rounded-md">
         <p className="text-red-800">Payment canceled.</p>
