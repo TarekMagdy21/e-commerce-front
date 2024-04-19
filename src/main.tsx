@@ -29,8 +29,7 @@ import ErrorPage from "./ErrorPage.tsx";
 const router = createBrowserRouter([
   { path: "/", element: <Home /> },
   { path: "/test", element: <Test /> },
-  { path: "/cancel", element: <CartResult /> },
-  { path: "/success", element: <CartResult /> },
+
   { path: "/login", element: <Login /> },
   { path: "/register", element: <SignUp /> },
   {
@@ -49,6 +48,14 @@ const router = createBrowserRouter([
   {
     path: "/cart",
     element: <Cart />,
+  },
+  {
+    path: "/cart/success",
+    element: <CartResult />,
+  },
+  {
+    path: "/cart/cancel",
+    element: <CartResult />,
   },
   {
     path: "/wishlist",
