@@ -27,9 +27,9 @@ const TablePage: React.FC<TablePageProps> = ({
   }
   return (
     <>
-      <div className="flex items-center justify-center mr-1">
+      <div className="flex items-center justify-center mt-5 mr-1">
         Rows Per Page:
-        <div className="flex items-center justify-center gap-2 ml-4 px-2">
+        <div className="flex items-center justify-center gap-2 px-2 ml-4">
           {availableOptions.map((option) => (
             <button
               key={option}
@@ -46,14 +46,14 @@ const TablePage: React.FC<TablePageProps> = ({
           ))}
         </div>
       </div>
-      <div className="flex items-center justify-center  my-6">
-        <div className="flex items-center justify-center  ">
+      <div className="flex items-center justify-center my-6">
+        <div className="flex items-center justify-center ">
           <button
             onClick={() => {
               setPage(0);
             }}
             disabled={page === 0}
-            className="border-2 p-2 mr-1 rounded-lg cursor-pointer border-blue-400   disabled:cursor-not-allowed disabled:border-gray-300"
+            className="p-2 mr-1 border-2 border-blue-400 rounded-lg cursor-pointer disabled:cursor-not-allowed disabled:border-gray-300"
           >
             First
           </button>
@@ -62,7 +62,7 @@ const TablePage: React.FC<TablePageProps> = ({
             onClick={() => {
               setPage(page - 1);
             }}
-            className="border-2 p-2 rounded-lg cursor-pointer  border-blue-400   disabled:cursor-not-allowed disabled:border-gray-300"
+            className="p-2 border-2 border-blue-400 rounded-lg cursor-pointer disabled:cursor-not-allowed disabled:border-gray-300"
           >
             Prev
           </button>
@@ -85,7 +85,7 @@ const TablePage: React.FC<TablePageProps> = ({
               setPage(page + 1);
             }}
             disabled={page === totalPages - 1}
-            className="border-2 p-2 px-4 rounded-lg cursor-pointer border-blue-400 disabled:cursor-not-allowed disabled:border-gray-300"
+            className="p-2 px-4 border-2 border-blue-400 rounded-lg cursor-pointer disabled:cursor-not-allowed disabled:border-gray-300"
           >
             Next
           </button>
@@ -94,7 +94,7 @@ const TablePage: React.FC<TablePageProps> = ({
               setPage(totalPages - 1);
             }}
             disabled={page === totalPages - 1}
-            className="ml-2 border-2 p-2 rounded-lg cursor-pointer border-blue-400   disabled:cursor-not-allowed disabled:border-gray-300"
+            className="p-2 ml-2 border-2 border-blue-400 rounded-lg cursor-pointer disabled:cursor-not-allowed disabled:border-gray-300"
           >
             Last
           </button>

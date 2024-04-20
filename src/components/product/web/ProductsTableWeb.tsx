@@ -445,8 +445,6 @@ const ProductsTableWeb: React.FC<ProductDetailsMobileProps> = ({
                 exclusive
                 onChange={(event, newSort) => {
                   console.log(event);
-
-                  //@ts-ignore
                   setListGrid(newSort);
                 }}
                 aria-label="text"
@@ -776,69 +774,64 @@ const ProductsTableWeb: React.FC<ProductDetailsMobileProps> = ({
               </div>
             ) : (
               <div>
-                {Products?.products?.map((product: ProductProps) => (
-                  <div className="cursor-pointer " key={product._id}>
-                    <div className="flex gap-4 mt-4">
-                      <div
-                        onClick={() => {
-                          navigate(
-                            `/product/${product.category}/${product._id}`,
-                            {
-                              state: { product },
-                            }
-                          );
-                        }}
-                        className="p-5 bg-gray-100 rounded-xl basis-1/3"
-                      >
-                        <img
-                          className="aspect-[17/12] rounded-lg"
-                          src={product.images[0]}
-                          alt=""
-                        />
-                      </div>
-                      <div className="relative basis-2/3">
-                        <span
-                          onClick={() => {
-                            addToWishlist({
-                              userId: userId,
-                              productId: product._id,
-                            });
-                          }}
-                          className="absolute p-2 text-blue-600 transition duration-300 ease-in-out border border-blue-600 rounded right-5 top-5 hover:bg-blue-600 hover:text-white"
-                        >
-                          {wishlist?.wishlist.filter(
-                            (item: any) => item._id == product._id
-                          ).length > 0 ? (
-                            <FaHeart />
-                          ) : (
-                            <FaRegHeart />
-                          )}
-                        </span>
+                {listGrid === "grid" ? (
+                  <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-3">
+                    {Products?.products?.map(
+                      (product: ProductProps, index: number) => (
                         <div
-                          onClick={() => {
-                            navigate(
-                              `/product/${product.category}/${product._id}`,
-                              {
-                                state: { product },
-                              }
-                            );
-                          }}
+                          className={`flex flex-col rounded overflow-hidden shadow-lg hover:shadow-xl hover:scale-110 transition duration-500`}
+                          key={product._id}
                         >
-                          <p className="text-2xl">{product.title}</p>
-                          <div className="flex items-center gap-2">
-                            <Rating value={product.rating} readOnly />{" "}
-                            <p className="  bg-[#565656] bg-opacity-60 rounded-full w-[0.3rem] h-[0.3rem]"></p>
-                            <p className="text-[#B3B7BB]">
-                              {product.stock} In Stock
-                            </p>
-                            <p className="  bg-[#565656] bg-opacity-60 rounded-full w-[0.3rem] h-[0.3rem]"></p>
-                            <p className="text-green-600">Free shipping</p>
+                          <div key={product._id}>
+                            <div>
+                              <div
+                                className="relative flex flex-column"
+                                onClick={() => {
+                                  navigate(
+                                    `/product/${product.category}/${product._id}`,
+                                    {
+                                      state: { product: product },
+                                    }
+                                  );
+                                }}
+                              >
+                                <img
+                                  className="object-fill w-full h-48 "
+                                  src={product.images[0]}
+                                  loading="lazy"
+                                  alt={""}
+                                />
+                              </div>
+                              <div className="flex flex-col p-6 border-t">
+                                <div
+                                  className="hover:text-[#0D6EFD] cursor-pointer truncate  "
+                                  onClick={() => {
+                                    navigate(
+                                      `/product/${product.category}/${product._id}`,
+                                      {
+                                        state: { product },
+                                      }
+                                    );
+                                  }}
+                                >
+                                  {product.title}
+                                </div>
+                                <div className="flex items-center justify-between mt-2 font-semibold">
+                                  <p>${product.price}</p>
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </div>
-
-                        {product.discountPercentage ? (
+                      )
+                    )}
+                  </div>
+                ) : (
+                  <>
+                    {Products?.products?.map((product: ProductProps) => (
+                      <div className="cursor-pointer " key={product._id}>
+                        <div className="flex gap-4 mt-4">
                           <div
-                            className=""
                             onClick={() => {
                               navigate(
                                 `/product/${product.category}/${product._id}`,
@@ -847,52 +840,113 @@ const ProductsTableWeb: React.FC<ProductDetailsMobileProps> = ({
                                 }
                               );
                             }}
+                            className="p-5 bg-gray-100 rounded-xl basis-1/3"
                           >
-                            <p className="text-[#FF4562] text-xl font-bold flex items-center  ">
-                              ${" "}
-                              {(
-                                product.price -
-                                product.price *
-                                  (product.discountPercentage / 100)
-                              ).toFixed(2)}
-                              <span className="text-[#9DA1A7]  font-semibold line-through ml-2 text-lg ">
+                            <img
+                              className="aspect-[17/12] rounded-lg"
+                              src={product.images[0]}
+                              alt=""
+                            />
+                          </div>
+                          <div className="relative basis-2/3">
+                            <span
+                              onClick={() => {
+                                addToWishlist({
+                                  userId: userId,
+                                  productId: product._id,
+                                });
+                              }}
+                              className="absolute p-2 text-blue-600 transition duration-300 ease-in-out border border-blue-600 rounded right-5 top-5 hover:bg-blue-600 hover:text-white"
+                            >
+                              {wishlist?.wishlist.filter(
+                                (item: any) => item._id == product._id
+                              ).length > 0 ? (
+                                <FaHeart />
+                              ) : (
+                                <FaRegHeart />
+                              )}
+                            </span>
+                            <div
+                              onClick={() => {
+                                navigate(
+                                  `/product/${product.category}/${product._id}`,
+                                  {
+                                    state: { product },
+                                  }
+                                );
+                              }}
+                            >
+                              <p className="text-2xl">{product.title}</p>
+                              <div className="flex items-center gap-2">
+                                <Rating value={product.rating} readOnly />{" "}
+                                <p className="  bg-[#565656] bg-opacity-60 rounded-full w-[0.3rem] h-[0.3rem]"></p>
+                                <p className="text-[#B3B7BB]">
+                                  {product.stock} In Stock
+                                </p>
+                                <p className="  bg-[#565656] bg-opacity-60 rounded-full w-[0.3rem] h-[0.3rem]"></p>
+                                <p className="text-green-600">Free shipping</p>
+                              </div>
+                            </div>
+
+                            {product.discountPercentage ? (
+                              <div
+                                className=""
+                                onClick={() => {
+                                  navigate(
+                                    `/product/${product.category}/${product._id}`,
+                                    {
+                                      state: { product },
+                                    }
+                                  );
+                                }}
+                              >
+                                <p className="text-[#FF4562] text-xl font-bold flex items-center  ">
+                                  ${" "}
+                                  {(
+                                    product.price -
+                                    product.price *
+                                      (product.discountPercentage / 100)
+                                  ).toFixed(2)}
+                                  <span className="text-[#9DA1A7]  font-semibold line-through ml-2 text-lg ">
+                                    ${product.price}
+                                  </span>
+                                </p>
+                              </div>
+                            ) : (
+                              <p
+                                onClick={() => {
+                                  navigate(
+                                    `/product/${product.category}/${product._id}`,
+                                    {
+                                      state: { product },
+                                    }
+                                  );
+                                }}
+                                className="text-[#FF4562] text-xl font-bold flex items-center gap-4"
+                              >
                                 ${product.price}
-                              </span>
+                              </p>
+                            )}
+                            <p
+                              onClick={() => {
+                                navigate(
+                                  `/product/${product.category}/${product._id}`,
+                                  {
+                                    state: { product },
+                                  }
+                                );
+                              }}
+                              className="text-[#b2b3b6]"
+                            >
+                              {product.description}
                             </p>
                           </div>
-                        ) : (
-                          <p
-                            onClick={() => {
-                              navigate(
-                                `/product/${product.category}/${product._id}`,
-                                {
-                                  state: { product },
-                                }
-                              );
-                            }}
-                            className="text-[#FF4562] text-xl font-bold flex items-center gap-4"
-                          >
-                            ${product.price}
-                          </p>
-                        )}
-                        <p
-                          onClick={() => {
-                            navigate(
-                              `/product/${product.category}/${product._id}`,
-                              {
-                                state: { product },
-                              }
-                            );
-                          }}
-                          className="text-[#b2b3b6]"
-                        >
-                          {product.description}
-                        </p>
+                        </div>
+                        <hr className="my-6 " />
                       </div>
-                    </div>
-                    <hr className="my-6 " />
-                  </div>
-                ))}
+                    ))}
+                  </>
+                )}
                 <div>
                   {Products?.products?.length > 0 ? (
                     <TablePage
@@ -904,10 +958,6 @@ const ProductsTableWeb: React.FC<ProductDetailsMobileProps> = ({
                     />
                   ) : (
                     <div className="flex justify-center">
-                      {/* <p className="flex flex-col text-center">
-                        No Products Found
-                        <span> Please check your filters</span>{" "}
-                      </p> */}
                       <TablePage
                         count={Products?.totalCount || 1}
                         page={page}
