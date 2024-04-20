@@ -776,55 +776,53 @@ const ProductsTableWeb: React.FC<ProductDetailsMobileProps> = ({
               <div>
                 {listGrid === "grid" ? (
                   <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-3">
-                    {Products?.products?.map(
-                      (product: ProductProps, index: number) => (
-                        <div
-                          className={`flex flex-col rounded overflow-hidden shadow-lg hover:shadow-xl hover:scale-110 transition duration-500`}
-                          key={product._id}
-                        >
-                          <div key={product._id}>
-                            <div>
+                    {Products?.products?.map((product: ProductProps) => (
+                      <div
+                        className={`flex flex-col rounded overflow-hidden shadow-lg hover:shadow-xl hover:scale-110 transition duration-500`}
+                        key={product._id}
+                      >
+                        <div key={product._id}>
+                          <div>
+                            <div
+                              className="relative flex flex-column"
+                              onClick={() => {
+                                navigate(
+                                  `/product/${product.category}/${product._id}`,
+                                  {
+                                    state: { product: product },
+                                  }
+                                );
+                              }}
+                            >
+                              <img
+                                className="object-fill w-full h-48 "
+                                src={product.images[0]}
+                                loading="lazy"
+                                alt={""}
+                              />
+                            </div>
+                            <div className="flex flex-col p-6 border-t">
                               <div
-                                className="relative flex flex-column"
+                                className="hover:text-[#0D6EFD] cursor-pointer truncate  "
                                 onClick={() => {
                                   navigate(
                                     `/product/${product.category}/${product._id}`,
                                     {
-                                      state: { product: product },
+                                      state: { product },
                                     }
                                   );
                                 }}
                               >
-                                <img
-                                  className="object-fill w-full h-48 "
-                                  src={product.images[0]}
-                                  loading="lazy"
-                                  alt={""}
-                                />
+                                {product.title}
                               </div>
-                              <div className="flex flex-col p-6 border-t">
-                                <div
-                                  className="hover:text-[#0D6EFD] cursor-pointer truncate  "
-                                  onClick={() => {
-                                    navigate(
-                                      `/product/${product.category}/${product._id}`,
-                                      {
-                                        state: { product },
-                                      }
-                                    );
-                                  }}
-                                >
-                                  {product.title}
-                                </div>
-                                <div className="flex items-center justify-between mt-2 font-semibold">
-                                  <p>${product.price}</p>
-                                </div>
+                              <div className="flex items-center justify-between mt-2 font-semibold">
+                                <p>${product.price}</p>
                               </div>
                             </div>
                           </div>
                         </div>
-                      )
-                    )}
+                      </div>
+                    ))}
                   </div>
                 ) : (
                   <>
